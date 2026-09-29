@@ -29,8 +29,17 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  const login = async (email, password) => {
+  const login = async (emailOrData, maybePassword) => {
     setLoading(true);
+    let email, password;
+    if (typeof emailOrData === 'object' && emailOrData !== null) {
+      email = emailOrData.email;
+      password = emailOrData.password;
+    } else {
+      email = emailOrData;
+      password = maybePassword;
+    }
+
     try {
       const res = await authApi.login({ email, password });
       const { user: userData, tokens } = res.data;
@@ -85,6 +94,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const uploadAvatar = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      const res = await authApi.uploadAvatar(formData);
+      setUser(res.data.user);
+      localStorage.setItem('applinex_user', JSON.stringify(res.data.user));
+      return { success: true, user: res.data.user, profile_image: res.data.profile_image };
+    } catch (err) {
+      return { success: false, error: err.response?.data?.error || 'Failed to upload photo.' };
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -97,6 +119,7 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         updateProfile,
+        uploadAvatar,
       }}
     >
       {children}

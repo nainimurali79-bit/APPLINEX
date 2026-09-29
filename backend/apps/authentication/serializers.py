@@ -7,8 +7,38 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'phone', 'address', 'city', 'postal_code', 'profile_image', 'created_at']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'phone', 'address', 'city', 'postal_code', 'profile_image', 'is_active', 'created_at']
         read_only_fields = ['id', 'created_at']
+
+class AdminUserCreateSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=6)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'postal_code', 'role', 'password', 'is_active']
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        email = validated_data['email']
+        username = email.split('@')[0]
+        base_username = username
+        counter = 1
+        while User.objects.filter(username=username).exists():
+            username = f"{base_username}{counter}"
+            counter += 1
+
+        user = User.objects.create(
+            username=username,
+            **validated_data
+        )
+        user.set_password(password)
+        user.save()
+        return user
+
+class UserAdminUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'postal_code', 'role', 'is_active']
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=6)
@@ -45,7 +75,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    email = serializers.CharField(required=True)
     password = serializers.CharField(write_only=True)
 
 class ProfileUpdateSerializer(serializers.ModelSerializer):

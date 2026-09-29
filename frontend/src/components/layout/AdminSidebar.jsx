@@ -13,7 +13,8 @@ import {
   Sparkles, 
   Settings, 
   LogOut,
-  ChevronRight
+  ChevronRight,
+  User
 } from 'lucide-react';
 
 const AdminSidebar = () => {
@@ -34,7 +35,9 @@ const AdminSidebar = () => {
     { name: 'Maintenance', path: '/admin/maintenance', icon: Wrench },
     { name: 'Reports', path: '/admin/reports', icon: FileText },
     { name: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
+    { name: 'Users & Customers', path: '/admin/users', icon: User },
     { name: 'AI Insights', path: '/admin/ai-insights', icon: Sparkles, isAi: true },
+    { name: 'Admin Profile', path: '/admin/profile', icon: Settings },
   ];
 
   return (

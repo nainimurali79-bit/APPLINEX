@@ -17,11 +17,16 @@ import {
   Share2, 
   Heart,
   Calendar,
-  Lock
+  Lock,
+  Layers
 } from 'lucide-react';
+import { useWishlist } from '../../context/WishlistContext';
+import { useNotification } from '../../context/NotificationContext';
 
 const ApplianceDetail = () => {
   const { id } = useParams();
+  const { toggleWishlist, isInWishlist, toggleCompare, isInCompare } = useWishlist();
+  const { addToast } = useNotification();
   const [appliance, setAppliance] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -244,21 +249,86 @@ const ApplianceDetail = () => {
                 </div>
               </div>
 
-              {/* Primary Action Button */}
-              <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
-                <button
-                  onClick={() => setBookingModalOpen(true)}
-                  disabled={!isAvailable}
-                  className="btn btn-primary btn-lg"
-                  style={{
-                    flex: 1,
-                    opacity: isAvailable ? 1 : 0.6,
-                    cursor: isAvailable ? 'pointer' : 'not-allowed',
-                    boxShadow: isAvailable ? '0 4px 20px rgba(30, 96, 213, 0.4)' : 'none'
-                  }}
-                >
-                  {isAvailable ? 'Rent Now • Quick Setup' : 'Currently Unavailable'}
-                </button>
+              {/* Primary Action Button & Auxiliary Buttons */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                  <button
+                    onClick={() => setBookingModalOpen(true)}
+                    disabled={!isAvailable}
+                    className="btn btn-primary btn-lg"
+                    style={{
+                      flex: 1,
+                      opacity: isAvailable ? 1 : 0.6,
+                      cursor: isAvailable ? 'pointer' : 'not-allowed',
+                      boxShadow: isAvailable ? '0 4px 20px rgba(30, 96, 213, 0.4)' : 'none'
+                    }}
+                  >
+                    {isAvailable ? 'Rent Now • Quick Setup' : 'Currently Unavailable'}
+                  </button>
+
+                  {/* Wishlist Button */}
+                  <button
+                    onClick={() => toggleWishlist(appliance)}
+                    style={{
+                      padding: '0 1.25rem',
+                      backgroundColor: isInWishlist(appliance.id) ? '#FEF2F2' : '#F1F5F9',
+                      border: isInWishlist(appliance.id) ? '1px solid #FECACA' : '1px solid var(--border-light)',
+                      borderRadius: '12px',
+                      color: isInWishlist(appliance.id) ? '#EF4444' : '#475569',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s'
+                    }}
+                    title={isInWishlist(appliance.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                  >
+                    <Heart size={20} fill={isInWishlist(appliance.id) ? '#EF4444' : 'none'} />
+                  </button>
+                </div>
+
+                {/* Compare & Share Row */}
+                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                  <button
+                    onClick={() => toggleCompare(appliance)}
+                    className="btn btn-secondary btn-sm"
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem',
+                      backgroundColor: isInCompare(appliance.id) ? 'var(--blue-subtle)' : '#F8FAFC',
+                      borderColor: isInCompare(appliance.id) ? 'var(--blue-primary)' : 'var(--border-light)',
+                      color: isInCompare(appliance.id) ? 'var(--blue-primary)' : 'var(--navy-primary)',
+                      fontWeight: 600,
+                      padding: '0.65rem 1rem',
+                      borderRadius: '10px'
+                    }}
+                  >
+                    <Layers size={16} />
+                    {isInCompare(appliance.id) ? 'In Comparison List' : 'Add to Compare'}
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      navigator.clipboard?.writeText(window.location.href);
+                      addToast('Product link copied to clipboard!', 'success');
+                    }}
+                    className="btn btn-secondary btn-sm"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.4rem',
+                      padding: '0.65rem 1rem',
+                      borderRadius: '10px'
+                    }}
+                    title="Share Appliance"
+                  >
+                    <Share2 size={16} /> Share
+                  </button>
+                </div>
               </div>
 
               {/* Reliability Assurance Badges */}
@@ -380,7 +450,39 @@ const ApplianceDetail = () => {
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'var(--blue-subtle)', color: 'var(--blue-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.8rem' }}>
+                      {rev.customer_avatar ? (
+                        <img
+                          src={rev.customer_avatar}
+                          alt={rev.customer_name || 'Customer'}
+                          style={{
+                            width: '34px',
+                            height: '34px',
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                            border: '1px solid #E2E8F0',
+                            flexShrink: 0
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            if (e.currentTarget.nextSibling) e.currentTarget.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
+                      <div
+                        style={{
+                          display: rev.customer_avatar ? 'none' : 'flex',
+                          width: '34px',
+                          height: '34px',
+                          borderRadius: '50%',
+                          backgroundColor: 'var(--blue-subtle)',
+                          color: 'var(--blue-primary)',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontWeight: 700,
+                          fontSize: '0.82rem',
+                          flexShrink: 0
+                        }}
+                      >
                         {rev.customer_name ? rev.customer_name[0] : 'U'}
                       </div>
                       <div>

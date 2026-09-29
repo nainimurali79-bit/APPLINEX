@@ -39,10 +39,10 @@ class Payment(models.Model):
     def save(self, *args, **kwargs):
         if not self.payment_id:
             year = datetime.datetime.now().year
-            rand_num = random.randint(1000, 9999)
+            rand_num = random.randint(100000, 999999)
             self.payment_id = f"PMT-{year}-{rand_num}"
         if not self.transaction_reference:
-            rand_hex = hex(random.randint(0x100000, 0xFFFFFF))[2:].upper()
+            rand_hex = hex(random.randint(0x1000000, 0xFFFFFFF))[2:].upper()
             self.transaction_reference = f"TXN-APX-{rand_hex}"
         super().save(*args, **kwargs)
 

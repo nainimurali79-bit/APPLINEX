@@ -33,9 +33,18 @@ class MaintenanceListCreateView(views.APIView):
 class MaintenanceDetailUpdateView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request, pk):
+        if request.user.role not in ['admin', 'support']:
+            return Response({'error': 'Unauthorized.'}, status=status.HTTP_403_FORBIDDEN)
+        try:
+            log = MaintenanceLog.objects.get(pk=pk)
+        except MaintenanceLog.DoesNotExist:
+            return Response({'error': 'Log not found.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(MaintenanceLogSerializer(log).data)
+
     def put(self, request, pk):
-        if request.user.role != 'admin':
-            return Response({'error': 'Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        if request.user.role not in ['admin', 'support']:
+            return Response({'error': 'Privileges required.'}, status=status.HTTP_403_FORBIDDEN)
         try:
             log = MaintenanceLog.objects.get(pk=pk)
         except MaintenanceLog.DoesNotExist:
@@ -50,6 +59,19 @@ class MaintenanceDetailUpdateView(views.APIView):
                 appliance.save(update_fields=['status'])
             return Response(MaintenanceLogSerializer(log).data)
         return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        return self.put(request, pk)
+
+    def delete(self, request, pk):
+        if request.user.role != 'admin':
+            return Response({'error': 'Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
+        try:
+            log = MaintenanceLog.objects.get(pk=pk)
+            log.delete()
+            return Response({'message': 'Maintenance log deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+        except MaintenanceLog.DoesNotExist:
+            return Response({'error': 'Log not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class ReturnsListView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]

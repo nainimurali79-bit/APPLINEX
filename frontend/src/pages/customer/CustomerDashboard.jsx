@@ -18,7 +18,9 @@ import {
   Clock, 
   CheckCircle2, 
   RotateCcw,
-  FileText
+  FileText,
+  Camera,
+  User
 } from 'lucide-react';
 
 const CustomerDashboard = () => {
@@ -76,18 +78,83 @@ const CustomerDashboard = () => {
     <div style={{ backgroundColor: 'var(--bg-main)', minHeight: '80vh', padding: '2rem 0 4rem' }}>
       <div className="container-custom">
         
-        {/* Dashboard Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
-          <div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--blue-primary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-              CUSTOMER PORTAL
+        {/* Dashboard Header with Customer Avatar */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+            <Link
+              to="/dashboard/profile"
+              title="Click to change your profile picture"
+              style={{ position: 'relative', display: 'inline-block', textDecoration: 'none', flexShrink: 0 }}
+            >
+              {user?.profile_image ? (
+                <img
+                  src={user.profile_image}
+                  alt={user.first_name || user.username}
+                  style={{
+                    width: '64px',
+                    height: '64px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    border: '3px solid #fff',
+                    boxShadow: '0 4px 14px rgba(37,99,235,0.22)',
+                    display: 'block'
+                  }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    if (e.currentTarget.nextSibling) e.currentTarget.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div
+                style={{
+                  display: user?.profile_image ? 'none' : 'flex',
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+                  color: '#fff',
+                  fontWeight: 800,
+                  fontSize: '1.4rem',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 14px rgba(37,99,235,0.22)'
+                }}
+              >
+                {(user?.first_name?.[0] || user?.username?.[0] || 'C').toUpperCase()}
+              </div>
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '-2px',
+                  right: '-2px',
+                  background: '#2563EB',
+                  color: '#fff',
+                  borderRadius: '50%',
+                  width: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2px solid #fff',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+                }}
+                title="Change Photo"
+              >
+                <Camera size={13} />
+              </span>
+            </Link>
+
+            <div>
+              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--blue-primary)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                CUSTOMER PORTAL
+              </div>
+              <h1 style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--navy-primary)', marginTop: '2px' }}>
+                Welcome, {user?.first_name || user?.username || 'Customer'}!
+              </h1>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '2px' }}>
+                Track your active rentals, payment ledger, and AI recommended upgrades.
+              </p>
             </div>
-            <h1 style={{ fontSize: '1.9rem', fontWeight: 800, color: 'var(--navy-primary)', marginTop: '2px' }}>
-              Welcome, {user?.first_name || user?.username || 'Customer'}!
-            </h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '2px' }}>
-              Track your active rentals, payment ledger, and AI recommended upgrades.
-            </p>
           </div>
           <Link to="/appliances" className="btn btn-primary" style={{ textDecoration: 'none' }}>
             + Rent New Appliance

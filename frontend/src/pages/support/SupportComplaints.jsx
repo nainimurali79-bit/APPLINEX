@@ -58,7 +58,8 @@ const SupportComplaints = () => {
       fetchComplaints();
     } catch (err) {
       setSubmitting(false);
-      addToast('Failed to update complaint.', 'error');
+      const errMsg = err.response?.data?.error || err.response?.data?.detail || 'Failed to update complaint.';
+      addToast(errMsg, 'error');
     }
   };
 

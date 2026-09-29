@@ -58,3 +58,44 @@ class Appliance(models.Model):
 
     def __str__(self):
         return f"{self.appliance_code} - {self.name} ({self.brand})"
+
+    @property
+    def available_units_count(self):
+        return self.units.filter(status='available').count()
+
+
+class ApplianceUnit(models.Model):
+    UNIT_STATUS_CHOICES = (
+        ('available', 'Available in Warehouse'),
+        ('reserved', 'Reserved for Booking'),
+        ('rented', 'Delivered & Active'),
+        ('maintenance', 'Under Maintenance / QC'),
+        ('retired', 'Retired'),
+    )
+
+    CONDITION_CHOICES = (
+        ('brand_new', 'Brand New'),
+        ('pristine', 'Pristine / Like-New'),
+        ('good', 'Good / Refurbished'),
+    )
+
+    appliance = models.ForeignKey(Appliance, on_delete=models.CASCADE, related_name='units')
+    serial_number = models.CharField(max_length=100, unique=True)
+    status = models.CharField(max_length=30, choices=UNIT_STATUS_CHOICES, default='available')
+    condition = models.CharField(max_length=30, choices=CONDITION_CHOICES, default='pristine')
+    city = models.CharField(max_length=100, default='Bangalore')
+    warehouse_location = models.CharField(max_length=150, default='Central Hub 1')
+    qr_code_id = models.CharField(max_length=100, blank=True, default='')
+    
+    purchase_date = models.DateField(null=True, blank=True)
+    last_service_date = models.DateField(null=True, blank=True)
+    next_service_due = models.DateField(null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['appliance', 'serial_number']
+
+    def __str__(self):
+        return f"{self.appliance.brand} {self.appliance.name} [SN: {self.serial_number}] ({self.status})"

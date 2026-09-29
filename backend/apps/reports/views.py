@@ -6,7 +6,10 @@ from apps.appliances.models import Appliance, Category
 from apps.rentals.models import Rental
 from apps.payments.models import Payment
 from apps.maintenance.models import MaintenanceLog
+from django.contrib.auth import get_user_model
 import datetime
+
+User = get_user_model()
 
 class AdminDashboardAnalyticsView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -26,6 +29,9 @@ class AdminDashboardAnalyticsView(views.APIView):
         
         total_rentals = Rental.objects.count()
         active_rentals = Rental.objects.filter(status__in=['active', 'payment_completed', 'approved']).count()
+
+        customers_count = User.objects.filter(role='customer').count()
+        total_users_count = User.objects.count()
 
         total_payments = Payment.objects.filter(status='successful').count()
         total_revenue_val = Payment.objects.filter(status='successful').aggregate(Sum('amount'))['amount__sum'] or 0.0
@@ -101,6 +107,8 @@ class AdminDashboardAnalyticsView(views.APIView):
                 'current_month_revenue': float(current_month_revenue),
                 'total_rentals': total_rentals,
                 'active_rentals': active_rentals,
+                'customers_count': customers_count,
+                'total_users': total_users_count,
                 'total_payments': total_payments,
                 'total_revenue': float(total_revenue_val),
             },

@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { appliancesApi } from '../../services/api';
+import React, { useState, useEffect, useRef } from 'react';
+import { appliancesApi, uploadApi } from '../../services/api';
 import { useNotification } from '../../context/NotificationContext';
 import StatusBadge from '../../components/common/StatusBadge';
 import Modal from '../../components/common/Modal';
 import SkeletonLoader from '../../components/common/SkeletonLoader';
-import { Package, Plus, Search, Edit2, Trash2, CheckCircle2, AlertTriangle, Eye } from 'lucide-react';
+import { Package, Plus, Search, Edit2, Trash2, CheckCircle2, AlertTriangle, Eye, UploadCloud, Camera, Sparkles, Image as ImageIcon } from 'lucide-react';
+
+const APPLIANCE_IMAGE_PRESETS = [
+  { label: 'Refrigerator', url: 'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=600&auto=format&fit=crop&q=80' },
+  { label: 'Washing Machine', url: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=600&auto=format&fit=crop&q=80' },
+  { label: 'Air Conditioner', url: 'https://images.unsplash.com/photo-1614633837777-628b61a3d906?w=600&auto=format&fit=crop&q=80' },
+  { label: 'Microwave Oven', url: 'https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=600&auto=format&fit=crop&q=80' },
+  { label: 'Water Purifier', url: 'https://images.unsplash.com/photo-1542013936693-884638332954?w=600&auto=format&fit=crop&q=80' },
+  { label: 'Smart 4K TV', url: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&auto=format&fit=crop&q=80' },
+  { label: 'Dishwasher', url: 'https://images.unsplash.com/photo-1585659722983-3a675dabf23d?w=600&auto=format&fit=crop&q=80' },
+  { label: 'Air Purifier', url: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop&q=80' },
+];
 
 const AdminAppliances = () => {
   const [appliances, setAppliances] = useState([]);
@@ -13,6 +24,8 @@ const AdminAppliances = () => {
   const [search, setSearch] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingAppliance, setEditingAppliance] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -79,6 +92,32 @@ const AdminAppliances = () => {
       featured: false,
     });
     setModalOpen(true);
+  };
+
+  const handleImageFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      addToast('Please select a valid image file (JPG, PNG, WEBP).', 'error');
+      return;
+    }
+
+    setUploadingImage(true);
+    try {
+      const formPayload = new FormData();
+      formPayload.append('image', file);
+      const res = await uploadApi.uploadImage(formPayload);
+      if (res.data?.url) {
+        setFormData((prev) => ({ ...prev, image_url: res.data.url }));
+        addToast('Appliance photo uploaded successfully!', 'success');
+      }
+    } catch (err) {
+      addToast('Failed to upload image. Please check file format.', 'error');
+    } finally {
+      setUploadingImage(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleOpenEdit = (appliance) => {
@@ -347,16 +386,102 @@ const AdminAppliances = () => {
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Product Image URL (High-Res WebP/JPEG)</label>
-            <input
-              type="url"
-              className="form-control"
-              value={formData.image_url}
-              onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-              required
-            />
+          {/* Appliance Image Section with Upload, Presets & Live Preview */}
+          <div className="form-group" style={{ backgroundColor: '#F8FAFC', padding: '1.25rem', borderRadius: '10px', border: '1px solid var(--border-light)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+              <label className="form-label" style={{ marginBottom: 0, fontWeight: 700 }}>
+                Appliance Product Picture
+              </label>
+              <button
+                type="button"
+                className="btn btn-outline btn-sm"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploadingImage}
+                style={{ fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+              >
+                <UploadCloud size={14} />
+                {uploadingImage ? 'Uploading...' : 'Upload Image from Computer'}
+              </button>
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageFileChange}
+                accept="image/*"
+                style={{ display: 'none' }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '0.85rem' }}>
+              {/* Preview Thumbnail */}
+              <div style={{
+                width: '74px',
+                height: '74px',
+                borderRadius: '8px',
+                border: '2px solid #CBD5E1',
+                backgroundColor: '#FFFFFF',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                {formData.image_url ? (
+                  <img
+                    src={formData.image_url}
+                    alt="Preview"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                ) : (
+                  <ImageIcon size={28} color="#94A3B8" />
+                )}
+              </div>
+
+              <div style={{ flex: 1 }}>
+                <input
+                  type="url"
+                  className="form-control"
+                  placeholder="https://images.unsplash.com/... or uploaded URL"
+                  value={formData.image_url}
+                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                  required
+                  style={{ fontSize: '0.85rem' }}
+                />
+                <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '4px' }}>
+                  Upload a photo from your computer, choose from presets below, or paste any image URL.
+                </div>
+              </div>
+            </div>
+
+            {/* Presets Bar */}
+            <div>
+              <div style={{ fontSize: '0.74rem', fontWeight: 600, color: '#475569', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Sparkles size={12} color="var(--blue-primary)" /> Quick Appliance Presets:
+              </div>
+              <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                {APPLIANCE_IMAGE_PRESETS.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, image_url: preset.url })}
+                    style={{
+                      fontSize: '0.72rem',
+                      padding: '3px 8px',
+                      borderRadius: '6px',
+                      backgroundColor: formData.image_url === preset.url ? 'var(--blue-primary)' : '#E2E8F0',
+                      color: formData.image_url === preset.url ? '#FFFFFF' : '#1E293B',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontWeight: 500
+                    }}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
+
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
             <div className="form-group">

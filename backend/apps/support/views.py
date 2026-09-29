@@ -29,6 +29,17 @@ class SupportTicketListCreateView(views.APIView):
 class SupportTicketDetailUpdateView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request, pk):
+        try:
+            ticket = SupportTicket.objects.get(pk=pk)
+        except SupportTicket.DoesNotExist:
+            return Response({'error': 'Ticket not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.role not in ['admin', 'support'] and ticket.customer != request.user:
+            return Response({'error': 'Access denied.'}, status=status.HTTP_403_FORBIDDEN)
+
+        return Response(SupportTicketSerializer(ticket).data)
+
     def put(self, request, pk):
         try:
             ticket = SupportTicket.objects.get(pk=pk)
@@ -43,6 +54,19 @@ class SupportTicketDetailUpdateView(views.APIView):
             ticket = serializer.save()
             return Response(SupportTicketSerializer(ticket).data)
         return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        return self.put(request, pk)
+
+    def delete(self, request, pk):
+        if request.user.role not in ['admin', 'support']:
+            return Response({'error': 'Unauthorized.'}, status=status.HTTP_403_FORBIDDEN)
+        try:
+            ticket = SupportTicket.objects.get(pk=pk)
+            ticket.delete()
+            return Response({'message': 'Ticket deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+        except SupportTicket.DoesNotExist:
+            return Response({'error': 'Ticket not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class ComplaintListCreateView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -69,20 +93,44 @@ class ComplaintListCreateView(views.APIView):
 class ComplaintDetailUpdateView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def put(self, request, pk):
-        if request.user.role not in ['admin', 'support']:
-            return Response({'error': 'Unauthorized.'}, status=status.HTTP_403_FORBIDDEN)
-
+    def get(self, request, pk):
         try:
             complaint = Complaint.objects.get(pk=pk)
         except Complaint.DoesNotExist:
             return Response({'error': 'Complaint not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.role not in ['admin', 'support'] and complaint.customer != request.user:
+            return Response({'error': 'Access denied.'}, status=status.HTTP_403_FORBIDDEN)
+
+        return Response(ComplaintSerializer(complaint).data)
+
+    def put(self, request, pk):
+        try:
+            complaint = Complaint.objects.get(pk=pk)
+        except Complaint.DoesNotExist:
+            return Response({'error': 'Complaint not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user.role not in ['admin', 'support'] and complaint.customer != request.user:
+            return Response({'error': 'Access denied.'}, status=status.HTTP_403_FORBIDDEN)
 
         serializer = ComplaintSerializer(complaint, data=request.data, partial=True)
         if serializer.is_valid():
             complaint = serializer.save()
             return Response(ComplaintSerializer(complaint).data)
         return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        return self.put(request, pk)
+
+    def delete(self, request, pk):
+        if request.user.role not in ['admin', 'support']:
+            return Response({'error': 'Unauthorized.'}, status=status.HTTP_403_FORBIDDEN)
+        try:
+            complaint = Complaint.objects.get(pk=pk)
+            complaint.delete()
+            return Response({'message': 'Complaint deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+        except Complaint.DoesNotExist:
+            return Response({'error': 'Complaint not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class SupportDashboardOverviewView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]

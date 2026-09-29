@@ -1,0 +1,8 @@
+date,customer_id,appliance_id,appliance_name,category,category_slug,duration_months,monthly_rate,total_amount,status
+2026-09-13,6,47,AO Smith Z9 Green RO Water Purifier,RO & Water Purifiers,ro-dispensers,12,721.65,9259.8,active
+2026-09-13,6,71,"VisionMax 65"" Premium 4K QLED Smart TV",Smart Televisions,smart-tvs,3,2374.05,8622.15,return_requested
+2026-09-12,6,41,KitchenPrime 60L Premium Built-in Oven,Microwaves & Ovens,microwaves-ovens,1,1499.0,2698.0,active
+2026-09-12,6,12,Blue Star 1.5 Ton 3 Star Wi-Fi Smart Inverter Split AC,Air Conditioners,air-conditioners,3,1471.55,5614.65,active
+2026-09-12,6,66,"Xiaomi 55"" X Pro 4K QLED Smart TV",Smart Televisions,smart-tvs,3,1139.05,4217.15,active
+2026-09-12,6,13,Carrier 1.5 Ton 5 Star Flexicool Inverter Split AC,Air Conditioners,air-conditioners,1,1799.0,3298.0,active
+2026-08-25,2,2,Front Load AI Direct Drive Washing Machine 8kg,Washing Machines,washing-machines,6,1169.1,8014.6,active

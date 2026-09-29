@@ -19,7 +19,13 @@ class SupportTicketSerializer(serializers.ModelSerializer):
             'subject', 'description', 'priority', 'status',
             'assigned_staff', 'staff_notes', 'created_at', 'updated_at'
         ]
-        read_only_fields = ['id', 'ticket_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'ticket_id', 'customer', 'created_at', 'updated_at']
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, 'copy') else dict(data)
+        if 'title' in data and 'subject' not in data:
+            data['subject'] = data['title']
+        return super().to_internal_value(data)
 
 class ComplaintSerializer(serializers.ModelSerializer):
     customer_name = serializers.CharField(source='customer.get_full_name', read_only=True)
@@ -33,4 +39,13 @@ class ComplaintSerializer(serializers.ModelSerializer):
             'rental', 'rental_code', 'issue', 'description',
             'status', 'resolution', 'created_at', 'updated_at'
         ]
-        read_only_fields = ['id', 'complaint_id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'complaint_id', 'customer', 'created_at', 'updated_at']
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, 'copy') else dict(data)
+        if 'title' in data and 'issue' not in data:
+            data['issue'] = data['title']
+        elif 'subject' in data and 'issue' not in data:
+            data['issue'] = data['subject']
+        return super().to_internal_value(data)
+

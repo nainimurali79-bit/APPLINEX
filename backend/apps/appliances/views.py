@@ -148,7 +148,9 @@ class ApplianceFilterMetaView(views.APIView):
         brands = list(Appliance.objects.values_list('brand', flat=True).distinct().order_by('brand'))
         subcategories = list(Appliance.objects.exclude(subcategory='').values_list('subcategory', flat=True).distinct())
         types = list(Appliance.objects.exclude(appliance_type='').values_list('appliance_type', flat=True).distinct())
+        categories = list(Category.objects.values('id', 'name', 'slug'))
         return Response({
+            'categories': categories,
             'brands': brands,
             'subcategories': subcategories,
             'types': types,

@@ -8,7 +8,7 @@ from .views import (
 
 urlpatterns = [
     path('', MaintenanceListCreateView.as_view(), name='maintenance_list_create'),
-    path('<int:pk>/', MaintenanceDetailUpdateView.as_view(), name='maintenance_detail_update'),
     path('returns/', ReturnsListView.as_view(), name='returns_list'),
     path('returns/<int:pk>/process/', ProcessReturnActionView.as_view(), name='process_return'),
+    path('<int:pk>/', MaintenanceDetailUpdateView.as_view(), name='maintenance_detail_update'),
 ]

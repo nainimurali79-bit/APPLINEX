@@ -1,6 +1,8 @@
 from rest_framework import status, views, permissions
 from rest_framework.response import Response
-from apps.rentals.models import Rental
+from django.db import transaction
+from django.utils import timezone
+from apps.rentals.models import Rental, MonthlyInvoice
 from .models import Payment
 from .serializers import PaymentSerializer, PaymentProcessSerializer
 import datetime
@@ -21,14 +23,15 @@ class PaymentListCreateView(views.APIView):
         serializer = PaymentSerializer(payments, many=True)
         return Response(serializer.data)
 
+    @transaction.atomic
     def post(self, request):
-        """Process real payment for a rental"""
+        """Process payment for a rental (Upfront or Monthly)"""
         serializer = PaymentProcessSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
         rental_id = serializer.validated_data['rental_id']
-        payment_method = serializer.validated_data['payment_method']
+        payment_method = serializer.validated_data.get('payment_method', 'card')
 
         try:
             rental = Rental.objects.get(pk=rental_id)
@@ -38,46 +41,66 @@ class PaymentListCreateView(views.APIView):
         if rental.customer != request.user and request.user.role != 'admin':
             return Response({'error': 'Access denied.'}, status=status.HTTP_403_FORBIDDEN)
 
-        # Check if already paid
-        if rental.status in ['payment_completed', 'active']:
-            return Response({'error': 'Payment for this rental has already been completed.'}, status=status.HTTP_400_BAD_REQUEST)
+        # Determine pay amount (Upfront or Monthly)
+        pay_amount = float(request.data.get('amount') or rental.upfront_total_paid or rental.total_amount)
+
+        # Check if already paid upfront
+        existing_successful = Payment.objects.filter(rental=rental, status='successful').exists()
+        if existing_successful and rental.status == 'active':
+            # Check for any unpaid monthly invoice
+            unpaid_inv = rental.invoices.filter(status='unpaid').order_by('billing_month_number').first()
+            if unpaid_inv:
+                unpaid_inv.status = 'paid'
+                unpaid_inv.paid_at = timezone.now()
+                unpaid_inv.save()
 
         # Create Payment Record
         payment = Payment.objects.create(
             rental=rental,
             customer=request.user,
-            amount=rental.total_amount,
+            amount=pay_amount,
             payment_method=payment_method,
             status='successful'
         )
 
-        # Update Rental Status and Timeline
-        rental.status = 'active'
-        rental.add_timeline_event(
-            'Payment Completed',
-            f'Payment of ₹{rental.total_amount} received via {payment.get_payment_method_display()}. Ref: {payment.transaction_reference}'
-        )
-        rental.add_timeline_event(
-            'Rental Active',
-            'Appliance dispatched and rental agreement active.'
-        )
-        rental.save()
+        # Update Rental Status and Timeline if pending
+        if rental.status in ['pending', 'approved', 'payment_completed']:
+            rental.status = 'active'
+            rental.add_timeline_event(
+                'Payment Completed',
+                f'Payment of ₹{pay_amount} received via {payment.get_payment_method_display()}. (Ref: {payment.transaction_reference})'
+            )
+            rental.add_timeline_event(
+                'Rental Active',
+                'Rental agreement active and scheduled for delivery setup.'
+            )
+            rental.save()
 
-        # Update Appliance status to rented
-        rental.appliance.status = 'rented'
-        rental.appliance.save(update_fields=['status'])
+        # Mark 1st invoice as paid
+        first_inv = rental.invoices.filter(billing_month_number=1).first()
+        if first_inv and first_inv.status != 'paid':
+            first_inv.status = 'paid'
+            first_inv.paid_at = timezone.now()
+            first_inv.transaction_reference = payment.transaction_reference
+            first_inv.save()
+
+        # Update Appliance / Unit status
+        if rental.assigned_unit:
+            rental.assigned_unit.status = 'rented'
+            rental.assigned_unit.save(update_fields=['status'])
 
         return Response({
             'message': 'Payment successful. Rental is now active.',
             'payment': PaymentSerializer(payment).data,
             'rental_id': rental.rental_id,
             'appliance_name': rental.appliance.name,
-            'amount': str(rental.total_amount),
+            'amount': str(pay_amount),
             'transaction_reference': payment.transaction_reference,
             'start_date': str(rental.start_date),
             'end_date': str(rental.end_date),
             'duration_months': rental.duration_months
         }, status=status.HTTP_201_CREATED)
+
 
 class PaymentReceiptView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -104,6 +127,7 @@ class PaymentReceiptView(views.APIView):
                 'phone': payment.customer.phone or rental.delivery_phone,
                 'address': rental.delivery_address,
                 'city': rental.delivery_city,
+                'pincode': rental.delivery_pincode or '560038'
             },
             'rental': {
                 'rental_id': rental.rental_id,
@@ -111,21 +135,23 @@ class PaymentReceiptView(views.APIView):
                 'appliance_code': rental.appliance.appliance_code,
                 'category': rental.appliance.category.name,
                 'brand': rental.appliance.brand,
+                'serial_number': rental.assigned_unit.serial_number if rental.assigned_unit else 'SN-APX-89421',
                 'duration_months': rental.duration_months,
                 'start_date': str(rental.start_date),
                 'end_date': str(rental.end_date),
             },
             'financial_breakdown': {
+                'first_month_rent': float(rental.first_month_rent or rental.monthly_rate),
                 'monthly_rate': float(rental.monthly_rate),
                 'duration_months': rental.duration_months,
-                'subtotal': float(rental.subtotal),
-                'delivery_fee': float(rental.delivery_fee),
                 'security_deposit': float(rental.security_deposit),
-                'total_amount': float(payment.amount),
+                'delivery_fee': float(rental.delivery_fee),
+                'damage_protection_fee': float(rental.damage_protection_fee if rental.damage_protection_opt_in else 0.0),
+                'total_amount_paid': float(payment.amount),
             },
             'organization': {
                 'name': 'APPLINEX Technologies Inc.',
-                'tagline': 'Smart Living, Simplified.',
+                'tagline': 'Smart Household Appliance Rentals',
                 'gstin': '29ABCDE1234F1Z5',
                 'support_email': 'support@applinex.com',
                 'website': 'https://applinex.com'
@@ -133,9 +159,11 @@ class PaymentReceiptView(views.APIView):
         }
         return Response(receipt_data)
 
+
 class PaymentRefundView(views.APIView):
     permission_classes = [permissions.IsAuthenticated]
 
+    @transaction.atomic
     def post(self, request, pk):
         if request.user.role != 'admin':
             return Response({'error': 'Admin privileges required.'}, status=status.HTTP_403_FORBIDDEN)
@@ -157,3 +185,18 @@ class PaymentRefundView(views.APIView):
             'message': 'Payment refunded successfully.',
             'payment': PaymentSerializer(payment).data
         })
+
+
+class PaymentDetailView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            payment = Payment.objects.get(pk=pk)
+        except Payment.DoesNotExist:
+            return Response({'error': 'Payment not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        if payment.customer != request.user and request.user.role not in ['admin', 'support']:
+            return Response({'error': 'Access denied.'}, status=status.HTTP_403_FORBIDDEN)
+
+        return Response(PaymentSerializer(payment).data)

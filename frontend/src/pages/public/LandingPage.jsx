@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { appliancesApi, aiApi } from '../../services/api';
 import ApplianceCard from '../../components/appliances/ApplianceCard';
 import RentalBookingModal from '../../components/customer/RentalBookingModal';
+import QuickViewModal from '../../components/appliances/QuickViewModal';
+import ApplianceComparisonDrawer from '../../components/appliances/ApplianceComparisonDrawer';
+import RentVsBuyCalculator from '../../components/appliances/RentVsBuyCalculator';
 import StarRating from '../../components/common/StarRating';
 import { 
   ArrowRight, 
@@ -18,7 +21,23 @@ import {
   Box, 
   Users, 
   TrendingUp, 
-  Sliders 
+  Sliders,
+  Layers,
+  Calculator,
+  Laptop,
+  PackageCheck,
+  Volume2,
+  Coffee,
+  Tv,
+  Wind,
+  Droplets,
+  Flame,
+  Activity,
+  Fan,
+  Thermometer,
+  Disc,
+  Feather,
+  Shirt
 } from 'lucide-react';
 
 const LandingPage = () => {
@@ -27,6 +46,7 @@ const LandingPage = () => {
   const [aiRecommendations, setAiRecommendations] = useState([]);
   const [selectedAppliance, setSelectedAppliance] = useState(null);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [quickViewAppliance, setQuickViewAppliance] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -86,160 +106,123 @@ const LandingPage = () => {
 
         <div className="container-custom" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3.5rem',
+            maxWidth: '860px',
+            margin: '0 auto',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center'
           }}>
             
-            {/* Left Hero Content */}
-            <div>
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'rgba(0, 196, 255, 0.12)',
-                border: '1px solid rgba(0, 196, 255, 0.3)',
-                padding: '0.4rem 0.9rem',
-                borderRadius: '9999px',
-                color: '#00C4FF',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                letterSpacing: '0.04em',
-                marginBottom: '1.25rem'
-              }}>
-                <Sparkles size={15} /> NEXT-GEN APPLIANCE RENTALS
-              </div>
-
-              <h1 style={{
-                fontSize: 'clamp(2.3rem, 4vw, 3.4rem)',
-                fontWeight: 800,
-                color: '#FFFFFF',
-                lineHeight: 1.15,
-                marginBottom: '1.25rem',
-                letterSpacing: '-0.02em'
-              }}>
-                Rent Household Appliances <br />
-                <span style={{
-                  background: 'linear-gradient(90deg, #00C4FF 0%, #38BDF8 50%, #818CF8 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
-                }}>
-                  Easily & Smartly
-                </span>
-              </h1>
-
-              <p style={{
-                fontSize: '1.1rem',
-                color: '#CBD5E1',
-                lineHeight: 1.6,
-                marginBottom: '2rem',
-                maxWidth: '540px'
-              }}>
-                Experience premium smart living without high upfront purchase costs. Flexible tenures, AI-powered matching, zero maintenance fees, and free doorstep installation.
-              </p>
-
-              {/* Action Buttons */}
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
-                <Link 
-                  to="/appliances" 
-                  className="btn btn-primary btn-lg"
-                  style={{ textDecoration: 'none', boxShadow: '0 4px 20px rgba(30, 96, 213, 0.5)' }}
-                >
-                  Browse Appliances <ArrowRight size={18} />
-                </Link>
-                <Link 
-                  to="/register" 
-                  className="btn btn-lg"
-                  style={{ 
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-                    color: '#FFFFFF', 
-                    border: '1px solid rgba(255, 255, 255, 0.25)',
-                    textDecoration: 'none'
-                  }}
-                >
-                  Get Started Free
-                </Link>
-              </div>
-
-              {/* Hero Micro Stats */}
-              <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', borderTop: '1px solid rgba(255, 255, 255, 0.12)', paddingTop: '1.5rem' }}>
-                <div>
-                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF' }}>15,000+</div>
-                  <div style={{ fontSize: '0.75rem', color: '#94A3B8' }}>Active Happy Homes</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#00C4FF' }}>99.4%</div>
-                  <div style={{ fontSize: '0.75rem', color: '#94A3B8' }}>On-Time Setup</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#10B981' }}>₹0 Fee</div>
-                  <div style={{ fontSize: '0.75rem', color: '#94A3B8' }}>Free Maintenance</div>
-                </div>
-              </div>
-
+            {/* Hero Badge */}
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              backgroundColor: 'rgba(0, 196, 255, 0.12)',
+              border: '1px solid rgba(0, 196, 255, 0.3)',
+              padding: '0.45rem 1.1rem',
+              borderRadius: '9999px',
+              color: '#00C4FF',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+              marginBottom: '1.5rem',
+              boxShadow: '0 0 20px rgba(0, 196, 255, 0.15)'
+            }}>
+              <Sparkles size={16} /> NEXT-GEN APPLIANCE RENTALS
             </div>
 
-            {/* Right Hero Showcase Visual matching reference composition */}
+            {/* Main Headline */}
+            <h1 style={{
+              fontSize: 'clamp(2.5rem, 5.2vw, 4.2rem)',
+              fontWeight: 800,
+              color: '#FFFFFF',
+              lineHeight: 1.15,
+              marginBottom: '1.5rem',
+              letterSpacing: '-0.02em'
+            }}>
+              Rent Household Appliances <br />
+              <span style={{
+                background: 'linear-gradient(90deg, #00C4FF 0%, #38BDF8 50%, #818CF8 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                Easily & Smartly
+              </span>
+            </h1>
+
+            {/* Subheading */}
+            <p style={{
+              fontSize: '1.18rem',
+              color: '#CBD5E1',
+              lineHeight: 1.65,
+              marginBottom: '2.5rem',
+              maxWidth: '680px'
+            }}>
+              Experience premium smart living without high upfront purchase costs. Flexible tenures, AI-powered matching, zero maintenance fees, and free doorstep installation.
+            </p>
+
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '3rem' }}>
+              <Link 
+                to="/appliances" 
+                className="btn btn-primary btn-lg"
+                style={{ 
+                  textDecoration: 'none', 
+                  boxShadow: '0 4px 25px rgba(30, 96, 213, 0.6)',
+                  padding: '0.85rem 2rem',
+                  fontSize: '1.05rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                Browse Appliances <ArrowRight size={18} />
+              </Link>
+              <Link 
+                to="/register" 
+                className="btn btn-lg"
+                style={{ 
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)', 
+                  color: '#FFFFFF', 
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  textDecoration: 'none',
+                  padding: '0.85rem 2rem',
+                  fontSize: '1.05rem',
+                  backdropFilter: 'blur(8px)'
+                }}
+              >
+                Get Started Free
+              </Link>
+            </div>
+
+            {/* Hero Micro Stats Bar */}
             <div style={{
               display: 'flex',
+              gap: '2.5rem',
+              flexWrap: 'wrap',
               justifyContent: 'center',
-              alignItems: 'center',
-              position: 'relative'
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: '20px',
+              padding: '1.25rem 2.5rem',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.25)'
             }}>
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                maxWidth: '480px',
-                background: 'linear-gradient(135deg, rgba(20, 44, 78, 0.8) 0%, rgba(11, 25, 44, 0.95) 100%)',
-                borderRadius: '24px',
-                border: '1px solid rgba(0, 196, 255, 0.3)',
-                padding: '2rem',
-                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(30, 96, 213, 0.2)'
-              }}>
-                <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#00C4FF', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
-                    FEATURED SMART SUITE
-                  </div>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF', marginTop: '2px' }}>
-                    Samsung Double Door Inverter 340L
-                  </div>
-                </div>
-
-                <div style={{ height: '240px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                  <img
-                    src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=600&auto=format&fit=crop&q=80"
-                    alt="Premium Smart Refrigerator"
-                    style={{
-                      maxHeight: '100%',
-                      maxWidth: '100%',
-                      objectFit: 'contain',
-                      filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.6))'
-                    }}
-                  />
-                </div>
-
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                  padding: '0.85rem 1.25rem',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)'
-                }}>
-                  <div>
-                    <div style={{ fontSize: '0.72rem', color: '#94A3B8', textTransform: 'uppercase' }}>Monthly Rate</div>
-                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#00C4FF' }}>₹1,499 <span style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: 400 }}>/mo</span></div>
-                  </div>
-                  <Link
-                    to="/appliances/1"
-                    className="btn btn-primary btn-sm"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    View Details
-                  </Link>
-                </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF' }}>15,000+</div>
+                <div style={{ fontSize: '0.8rem', color: '#94A3B8', marginTop: '2px' }}>Active Happy Homes</div>
+              </div>
+              <div style={{ width: '1px', backgroundColor: 'rgba(255, 255, 255, 0.12)', alignSelf: 'stretch' }} />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#00C4FF' }}>99.4%</div>
+                <div style={{ fontSize: '0.8rem', color: '#94A3B8', marginTop: '2px' }}>On-Time Setup</div>
+              </div>
+              <div style={{ width: '1px', backgroundColor: 'rgba(255, 255, 255, 0.12)', alignSelf: 'stretch' }} />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#10B981' }}>₹0 Fee</div>
+                <div style={{ fontSize: '0.8rem', color: '#94A3B8', marginTop: '2px' }}>Free Maintenance</div>
               </div>
             </div>
 
@@ -265,46 +248,97 @@ const LandingPage = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
             gap: '1.5rem'
           }}>
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                to={`/appliances?category=${cat.slug}`}
-                className="app-card app-card-hover"
-                style={{
-                  padding: '1.5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1.25rem',
-                  textDecoration: 'none',
-                  color: 'inherit'
-                }}
-              >
-                <div style={{
-                  width: '54px',
-                  height: '54px',
-                  borderRadius: '14px',
-                  backgroundColor: 'var(--blue-subtle)',
-                  color: 'var(--blue-primary)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  <Box size={26} />
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--navy-primary)', marginBottom: '2px' }}>
-                    {cat.name}
-                  </h3>
-                  <div style={{ fontSize: '0.78rem', color: '#64748B' }}>
-                    {cat.appliances_count || 4} Models Available
+            {categories.map((cat) => {
+              const getCategoryStyle = (slug) => {
+                switch(slug) {
+                  case 'refrigerators':
+                    return { icon: <Box size={26} />, bg: '#EFF6FF', color: '#1D4ED8' };
+                  case 'washing-machines':
+                    return { icon: <Shirt size={26} />, bg: '#F0FDF4', color: '#15803D' };
+                  case 'air-conditioners':
+                    return { icon: <Wind size={26} />, bg: '#E0F2FE', color: '#0284C7' };
+                  case 'smart-tvs':
+                    return { icon: <Tv size={26} />, bg: '#EEF2FF', color: '#4F46E5' };
+                  case 'ro-dispensers':
+                    return { icon: <Droplets size={26} />, bg: '#ECFEFF', color: '#0891B2' };
+                  case 'microwaves-ovens':
+                    return { icon: <Flame size={26} />, bg: '#FFF1F2', color: '#E11D48' };
+                  case 'induction-cooktops':
+                    return { icon: <Zap size={26} />, bg: '#FEF3C7', color: '#D97706' };
+                  case 'air-purifiers':
+                    return { icon: <Activity size={26} />, bg: '#DCFCE7', color: '#16A34A' };
+                  case 'air-coolers':
+                    return { icon: <Fan size={26} />, bg: '#E0F7FA', color: '#00838F' };
+                  case 'vacuum-cleaners':
+                    return { icon: <Sparkles size={26} />, bg: '#FAF5FF', color: '#7E22CE' };
+                  case 'dishwashers':
+                    return { icon: <Sparkles size={26} />, bg: '#F1F5F9', color: '#475569' };
+                  case 'water-heaters':
+                    return { icon: <Thermometer size={26} />, bg: '#FFF7ED', color: '#C2410C' };
+                  case 'small-kitchen':
+                    return { icon: <Coffee size={26} />, bg: '#FFEDD5', color: '#EA580C' };
+                  case 'fans':
+                    return { icon: <Disc size={26} />, bg: '#F3F4F6', color: '#374151' };
+                  case 'irons-steamers':
+                    return { icon: <Feather size={26} />, bg: '#FDF2F8', color: '#BE185D' };
+                  case 'soundbars-audio':
+                    return { icon: <Volume2 size={26} />, bg: '#F3E8FF', color: '#9333EA' };
+                  case 'laptops-wfh':
+                    return { icon: <Laptop size={26} />, bg: '#EFF6FF', color: '#2563EB' };
+                  case 'appliance-combos':
+                    return { icon: <PackageCheck size={26} />, bg: '#FEF3C7', color: '#B45309' };
+                  default:
+                    return { icon: <Box size={26} />, bg: 'var(--blue-subtle)', color: 'var(--blue-primary)' };
+                }
+              };
+
+              const style = getCategoryStyle(cat.slug);
+
+              return (
+                <Link
+                  key={cat.id}
+                  to={`/appliances?category=${cat.slug}`}
+                  className="app-card app-card-hover"
+                  style={{
+                    padding: '1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1.25rem',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    borderRadius: '16px',
+                    transition: 'all 0.25s ease'
+                  }}
+                >
+                  <div style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '14px',
+                    backgroundColor: style.bg,
+                    color: style.color,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}>
+                    {style.icon}
                   </div>
-                </div>
-              </Link>
-            ))}
+                  <div>
+                    <h3 style={{ fontSize: '1.02rem', fontWeight: 700, color: 'var(--navy-primary)', marginBottom: '3px' }}>
+                      {cat.name}
+                    </h3>
+                    <div style={{ fontSize: '0.8rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                      <span>{cat.appliances_count || 4} Models</span>
+                      <span>•</span>
+                      <span style={{ color: 'var(--blue-primary)', fontWeight: 600 }}>Explore →</span>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
 
         </div>
@@ -338,6 +372,7 @@ const LandingPage = () => {
                 key={appliance.id}
                 appliance={appliance}
                 onRentClick={handleRentClick}
+                onQuickView={(app) => setQuickViewAppliance(app)}
               />
             ))}
           </div>
@@ -417,6 +452,25 @@ const LandingPage = () => {
 
           </div>
 
+        </div>
+      </section>
+
+      {/* 4.5. INTERACTIVE RENT VS BUY SAVINGS CALCULATOR */}
+      <section style={{ padding: '4.5rem 0', backgroundColor: 'var(--bg-main)' }}>
+        <div className="container-custom" style={{ maxWidth: '960px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--blue-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.35rem' }}>
+              TRANSPARENT FINANCIAL INTELLIGENCE
+            </div>
+            <h2 style={{ fontSize: '2.1rem', fontWeight: 800, color: 'var(--navy-primary)' }}>
+              Calculate Your Rent vs. Buy Savings
+            </h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.4rem' }}>
+              See in real-time how much money and hassle you save renting with ApplineX.
+            </p>
+          </div>
+
+          <RentVsBuyCalculator defaultMonthlyRent={1499} defaultApplianceName="Samsung Inverter 340L Refrigerator" />
         </div>
       </section>
 
@@ -704,6 +758,17 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
+
+      {/* Quick View Modal */}
+      {quickViewAppliance && (
+        <QuickViewModal
+          appliance={quickViewAppliance}
+          isOpen={Boolean(quickViewAppliance)}
+          onClose={() => setQuickViewAppliance(null)}
+          onRentClick={handleRentClick}
+        />
+      )}
 
       {/* Interactive Booking Modal */}
       {selectedAppliance && (

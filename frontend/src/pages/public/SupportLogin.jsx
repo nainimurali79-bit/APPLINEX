@@ -10,7 +10,7 @@ const SupportLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const { addToast } = useNotification();
   const navigate = useNavigate();
 
@@ -22,6 +22,7 @@ const SupportLogin = () => {
 
     if (result.success) {
       if (result.user.role !== 'support' && result.user.role !== 'admin') {
+        logout();
         addToast('Access denied. Support staff privileges required.', 'error');
         return;
       }
@@ -71,13 +72,13 @@ const SupportLogin = () => {
         <div className="app-card" style={{ padding: '2.25rem', borderTop: '4px solid #00C4FF' }}>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label">Support Email</label>
+              <label className="form-label">Support Email or Username</label>
               <div style={{ position: 'relative' }}>
                 <Mail size={17} color="#94A3B8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  placeholder="Enter Email id"
+                  placeholder="Enter Email or Username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   style={{ paddingLeft: '2.4rem' }}

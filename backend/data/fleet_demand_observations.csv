@@ -1,0 +1,205 @@
+date,appliance_id,category,product_name,brand,available_units,rented_units,utilization_rate,rental_duration_months,customer_segment,leasing_velocity,season,city
+2026-01-01,APP0001,AC,LG 1.5 Ton Inverter AC,LG,25,8,32.0,4.4,Families,0.32,Winter,Hyderabad
+2026-02-01,APP0002,AC,LG 1.5 Ton Inverter AC,LG,25,9,36.0,4.8,Students,0.36,Winter,Hyderabad
+2026-03-01,APP0003,AC,LG 1.5 Ton Inverter AC,LG,25,14,56.0,5.1,Students,0.56,Summer,Hyderabad
+2026-04-01,APP0004,AC,LG 1.5 Ton Inverter AC,LG,25,20,80.0,4.1,Students,0.8,Summer,Hyderabad
+2026-05-01,APP0005,AC,LG 1.5 Ton Inverter AC,LG,25,24,96.0,3.0,Working Professionals,0.96,Summer,Hyderabad
+2026-06-01,APP0006,AC,LG 1.5 Ton Inverter AC,LG,25,24,96.0,3.3,Students,0.96,Summer,Hyderabad
+2026-07-01,APP0007,AC,LG 1.5 Ton Inverter AC,LG,25,19,76.0,3.4,Working Professionals,0.76,Monsoon,Hyderabad
+2026-08-01,APP0008,AC,LG 1.5 Ton Inverter AC,LG,25,17,68.0,5.0,Working Professionals,0.68,Monsoon,Hyderabad
+2026-09-01,APP0009,AC,LG 1.5 Ton Inverter AC,LG,25,16,64.0,4.6,Families,0.64,Monsoon,Hyderabad
+2026-10-01,APP0010,AC,LG 1.5 Ton Inverter AC,LG,25,14,56.0,5.3,Students,0.56,Transition,Hyderabad
+2026-11-01,APP0011,AC,LG 1.5 Ton Inverter AC,LG,25,12,48.0,6.0,Students,0.48,Winter,Hyderabad
+2026-12-01,APP0012,AC,LG 1.5 Ton Inverter AC,LG,25,10,40.0,4.5,PG Residents,0.4,Winter,Hyderabad
+2026-01-01,APP0013,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,8,33.33,3.5,Working Professionals,0.333,Winter,Hyderabad
+2026-02-01,APP0014,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,10,41.67,5.5,Students,0.417,Winter,Hyderabad
+2026-03-01,APP0015,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,13,54.17,4.6,Students,0.542,Summer,Hyderabad
+2026-04-01,APP0016,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,19,79.17,3.2,Working Professionals,0.792,Summer,Hyderabad
+2026-05-01,APP0017,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,23,95.83,5.3,Working Professionals,0.958,Summer,Hyderabad
+2026-06-01,APP0018,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,22,91.67,4.6,Families,0.917,Summer,Hyderabad
+2026-07-01,APP0019,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,18,75.0,5.0,Students,0.75,Monsoon,Hyderabad
+2026-08-01,APP0020,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,17,70.83,5.2,Families,0.708,Monsoon,Hyderabad
+2026-09-01,APP0021,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,15,62.5,4.3,Families,0.625,Monsoon,Hyderabad
+2026-10-01,APP0022,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,13,54.17,5.4,Students,0.542,Transition,Hyderabad
+2026-11-01,APP0023,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,11,45.83,3.5,Families,0.458,Winter,Hyderabad
+2026-12-01,APP0024,AC,Voltas 1.5 Ton Inverter AC,Voltas,24,10,41.67,4.7,Working Professionals,0.417,Winter,Hyderabad
+2026-01-01,APP0025,Refrigerator,Samsung 253L Double Door,Samsung,22,12,54.55,4.0,Families,0.545,Winter,Hyderabad
+2026-02-01,APP0026,Refrigerator,Samsung 253L Double Door,Samsung,22,13,59.09,4.8,Working Professionals,0.591,Winter,Hyderabad
+2026-03-01,APP0027,Refrigerator,Samsung 253L Double Door,Samsung,22,12,54.55,5.2,Students,0.545,Summer,Hyderabad
+2026-04-01,APP0028,Refrigerator,Samsung 253L Double Door,Samsung,22,13,59.09,5.3,Working Professionals,0.591,Summer,Hyderabad
+2026-05-01,APP0029,Refrigerator,Samsung 253L Double Door,Samsung,22,14,63.64,4.8,Working Professionals,0.636,Summer,Hyderabad
+2026-06-01,APP0030,Refrigerator,Samsung 253L Double Door,Samsung,22,14,63.64,5.1,Students,0.636,Summer,Hyderabad
+2026-07-01,APP0031,Refrigerator,Samsung 253L Double Door,Samsung,22,15,68.18,4.1,PG Residents,0.682,Monsoon,Hyderabad
+2026-08-01,APP0032,Refrigerator,Samsung 253L Double Door,Samsung,22,16,72.73,5.4,Families,0.727,Monsoon,Hyderabad
+2026-09-01,APP0033,Refrigerator,Samsung 253L Double Door,Samsung,22,16,72.73,4.9,Families,0.727,Monsoon,Hyderabad
+2026-10-01,APP0034,Refrigerator,Samsung 253L Double Door,Samsung,22,18,81.82,4.6,Families,0.818,Transition,Hyderabad
+2026-11-01,APP0035,Refrigerator,Samsung 253L Double Door,Samsung,22,17,77.27,4.2,Working Professionals,0.773,Winter,Hyderabad
+2026-12-01,APP0036,Refrigerator,Samsung 253L Double Door,Samsung,22,19,86.36,4.3,Families,0.864,Winter,Hyderabad
+2026-01-01,APP0037,Refrigerator,LG 260L Double Door,LG,22,12,54.55,4.3,Working Professionals,0.545,Winter,Hyderabad
+2026-02-01,APP0038,Refrigerator,LG 260L Double Door,LG,22,12,54.55,4.3,Working Professionals,0.545,Winter,Hyderabad
+2026-03-01,APP0039,Refrigerator,LG 260L Double Door,LG,22,13,59.09,4.8,Working Professionals,0.591,Summer,Hyderabad
+2026-04-01,APP0040,Refrigerator,LG 260L Double Door,LG,22,13,59.09,5.6,PG Residents,0.591,Summer,Hyderabad
+2026-05-01,APP0041,Refrigerator,LG 260L Double Door,LG,22,13,59.09,4.5,Working Professionals,0.591,Summer,Hyderabad
+2026-06-01,APP0042,Refrigerator,LG 260L Double Door,LG,22,15,68.18,4.2,Working Professionals,0.682,Summer,Hyderabad
+2026-07-01,APP0043,Refrigerator,LG 260L Double Door,LG,22,15,68.18,4.7,Students,0.682,Monsoon,Hyderabad
+2026-08-01,APP0044,Refrigerator,LG 260L Double Door,LG,22,16,72.73,4.5,Working Professionals,0.727,Monsoon,Hyderabad
+2026-09-01,APP0045,Refrigerator,LG 260L Double Door,LG,22,17,77.27,5.1,Working Professionals,0.773,Monsoon,Hyderabad
+2026-10-01,APP0046,Refrigerator,LG 260L Double Door,LG,22,17,77.27,5.6,Families,0.773,Transition,Hyderabad
+2026-11-01,APP0047,Refrigerator,LG 260L Double Door,LG,22,18,81.82,6.3,Students,0.818,Winter,Hyderabad
+2026-12-01,APP0048,Refrigerator,LG 260L Double Door,LG,22,18,81.82,5.2,Students,0.818,Winter,Hyderabad
+2026-01-01,APP0049,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,11,55.0,4.1,Families,0.55,Winter,Hyderabad
+2026-02-01,APP0050,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,12,60.0,4.2,Working Professionals,0.6,Winter,Hyderabad
+2026-03-01,APP0051,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,11,55.0,4.9,Families,0.55,Summer,Hyderabad
+2026-04-01,APP0052,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,13,65.0,4.4,Students,0.65,Summer,Hyderabad
+2026-05-01,APP0053,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,13,65.0,4.2,PG Residents,0.65,Summer,Hyderabad
+2026-06-01,APP0054,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,13,65.0,4.9,Families,0.65,Summer,Hyderabad
+2026-07-01,APP0055,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,14,70.0,5.5,Working Professionals,0.7,Monsoon,Hyderabad
+2026-08-01,APP0056,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,14,70.0,4.3,Families,0.7,Monsoon,Hyderabad
+2026-09-01,APP0057,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,15,75.0,5.1,Working Professionals,0.75,Monsoon,Hyderabad
+2026-10-01,APP0058,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,16,80.0,3.8,Families,0.8,Transition,Hyderabad
+2026-11-01,APP0059,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,16,80.0,4.8,Families,0.8,Winter,Hyderabad
+2026-12-01,APP0060,Washing Machine,Whirlpool 7kg Fully Automatic,Whirlpool,20,17,85.0,5.2,Students,0.85,Winter,Hyderabad
+2026-01-01,APP0061,Washing Machine,Samsung 7kg Top Load,Samsung,20,11,55.0,3.9,Students,0.55,Winter,Hyderabad
+2026-02-01,APP0062,Washing Machine,Samsung 7kg Top Load,Samsung,20,12,60.0,3.5,Families,0.6,Winter,Hyderabad
+2026-03-01,APP0063,Washing Machine,Samsung 7kg Top Load,Samsung,20,11,55.0,5.0,Families,0.55,Summer,Hyderabad
+2026-04-01,APP0064,Washing Machine,Samsung 7kg Top Load,Samsung,20,12,60.0,3.6,Families,0.6,Summer,Hyderabad
+2026-05-01,APP0065,Washing Machine,Samsung 7kg Top Load,Samsung,20,13,65.0,4.8,Families,0.65,Summer,Hyderabad
+2026-06-01,APP0066,Washing Machine,Samsung 7kg Top Load,Samsung,20,13,65.0,4.6,Working Professionals,0.65,Summer,Hyderabad
+2026-07-01,APP0067,Washing Machine,Samsung 7kg Top Load,Samsung,20,14,70.0,3.8,PG Residents,0.7,Monsoon,Hyderabad
+2026-08-01,APP0068,Washing Machine,Samsung 7kg Top Load,Samsung,20,15,75.0,4.3,Families,0.75,Monsoon,Hyderabad
+2026-09-01,APP0069,Washing Machine,Samsung 7kg Top Load,Samsung,20,15,75.0,5.7,Working Professionals,0.75,Monsoon,Hyderabad
+2026-10-01,APP0070,Washing Machine,Samsung 7kg Top Load,Samsung,20,15,75.0,4.5,Families,0.75,Transition,Hyderabad
+2026-11-01,APP0071,Washing Machine,Samsung 7kg Top Load,Samsung,20,15,75.0,4.9,PG Residents,0.75,Winter,Hyderabad
+2026-12-01,APP0072,Washing Machine,Samsung 7kg Top Load,Samsung,20,16,80.0,5.1,PG Residents,0.8,Winter,Hyderabad
+2026-01-01,APP0073,Television,Samsung 43-inch 4K Smart TV,Samsung,18,10,55.56,3.3,Families,0.556,Winter,Hyderabad
+2026-02-01,APP0074,Television,Samsung 43-inch 4K Smart TV,Samsung,18,10,55.56,4.1,Working Professionals,0.556,Winter,Hyderabad
+2026-03-01,APP0075,Television,Samsung 43-inch 4K Smart TV,Samsung,18,11,61.11,4.8,Working Professionals,0.611,Summer,Hyderabad
+2026-04-01,APP0076,Television,Samsung 43-inch 4K Smart TV,Samsung,18,11,61.11,3.9,PG Residents,0.611,Summer,Hyderabad
+2026-05-01,APP0077,Television,Samsung 43-inch 4K Smart TV,Samsung,18,12,66.67,3.6,Families,0.667,Summer,Hyderabad
+2026-06-01,APP0078,Television,Samsung 43-inch 4K Smart TV,Samsung,18,13,72.22,5.4,Families,0.722,Summer,Hyderabad
+2026-07-01,APP0079,Television,Samsung 43-inch 4K Smart TV,Samsung,18,12,66.67,3.7,Families,0.667,Monsoon,Hyderabad
+2026-08-01,APP0080,Television,Samsung 43-inch 4K Smart TV,Samsung,18,13,72.22,4.7,PG Residents,0.722,Monsoon,Hyderabad
+2026-09-01,APP0081,Television,Samsung 43-inch 4K Smart TV,Samsung,18,14,77.78,7.6,Families,0.778,Monsoon,Hyderabad
+2026-10-01,APP0082,Television,Samsung 43-inch 4K Smart TV,Samsung,18,15,83.33,5.3,Families,0.833,Transition,Hyderabad
+2026-11-01,APP0083,Television,Samsung 43-inch 4K Smart TV,Samsung,18,14,77.78,5.1,Working Professionals,0.778,Winter,Hyderabad
+2026-12-01,APP0084,Television,Samsung 43-inch 4K Smart TV,Samsung,18,15,83.33,3.8,Students,0.833,Winter,Hyderabad
+2026-01-01,APP0085,Television,LG 43-inch 4K Smart TV,LG,18,11,61.11,3.0,Working Professionals,0.611,Winter,Hyderabad
+2026-02-01,APP0086,Television,LG 43-inch 4K Smart TV,LG,18,10,55.56,4.6,Students,0.556,Winter,Hyderabad
+2026-03-01,APP0087,Television,LG 43-inch 4K Smart TV,LG,18,11,61.11,5.4,Students,0.611,Summer,Hyderabad
+2026-04-01,APP0088,Television,LG 43-inch 4K Smart TV,LG,18,12,66.67,4.6,Working Professionals,0.667,Summer,Hyderabad
+2026-05-01,APP0089,Television,LG 43-inch 4K Smart TV,LG,18,11,61.11,4.7,Students,0.611,Summer,Hyderabad
+2026-06-01,APP0090,Television,LG 43-inch 4K Smart TV,LG,18,13,72.22,6.0,Families,0.722,Summer,Hyderabad
+2026-07-01,APP0091,Television,LG 43-inch 4K Smart TV,LG,18,12,66.67,4.6,Families,0.667,Monsoon,Hyderabad
+2026-08-01,APP0092,Television,LG 43-inch 4K Smart TV,LG,18,13,72.22,3.2,Students,0.722,Monsoon,Hyderabad
+2026-09-01,APP0093,Television,LG 43-inch 4K Smart TV,LG,18,14,77.78,5.2,Working Professionals,0.778,Monsoon,Hyderabad
+2026-10-01,APP0094,Television,LG 43-inch 4K Smart TV,LG,18,14,77.78,4.2,Working Professionals,0.778,Transition,Hyderabad
+2026-11-01,APP0095,Television,LG 43-inch 4K Smart TV,LG,18,15,83.33,4.8,Families,0.833,Winter,Hyderabad
+2026-12-01,APP0096,Television,LG 43-inch 4K Smart TV,LG,18,15,83.33,5.8,Families,0.833,Winter,Hyderabad
+2026-01-01,APP0097,Water Purifier,Kent 8L RO+UV,Kent,16,8,50.0,4.1,Working Professionals,0.5,Winter,Hyderabad
+2026-02-01,APP0098,Water Purifier,Kent 8L RO+UV,Kent,16,9,56.25,6.0,Students,0.562,Winter,Hyderabad
+2026-03-01,APP0099,Water Purifier,Kent 8L RO+UV,Kent,16,8,50.0,3.7,Students,0.5,Summer,Hyderabad
+2026-04-01,APP0100,Water Purifier,Kent 8L RO+UV,Kent,16,9,56.25,3.5,Families,0.562,Summer,Hyderabad
+2026-05-01,APP0101,Water Purifier,Kent 8L RO+UV,Kent,16,10,62.5,4.6,Working Professionals,0.625,Summer,Hyderabad
+2026-06-01,APP0102,Water Purifier,Kent 8L RO+UV,Kent,16,11,68.75,6.4,Families,0.688,Summer,Hyderabad
+2026-07-01,APP0103,Water Purifier,Kent 8L RO+UV,Kent,16,11,68.75,4.9,Students,0.688,Monsoon,Hyderabad
+2026-08-01,APP0104,Water Purifier,Kent 8L RO+UV,Kent,16,12,75.0,4.5,Working Professionals,0.75,Monsoon,Hyderabad
+2026-09-01,APP0105,Water Purifier,Kent 8L RO+UV,Kent,16,12,75.0,5.0,Working Professionals,0.75,Monsoon,Hyderabad
+2026-10-01,APP0106,Water Purifier,Kent 8L RO+UV,Kent,16,12,75.0,6.2,Working Professionals,0.75,Transition,Hyderabad
+2026-11-01,APP0107,Water Purifier,Kent 8L RO+UV,Kent,16,13,81.25,5.0,PG Residents,0.812,Winter,Hyderabad
+2026-12-01,APP0108,Water Purifier,Kent 8L RO+UV,Kent,16,13,81.25,4.7,Working Professionals,0.812,Winter,Hyderabad
+2026-01-01,APP0109,Water Purifier,Livpure 7L RO+UV,Livpure,16,9,56.25,5.2,Students,0.562,Winter,Hyderabad
+2026-02-01,APP0110,Water Purifier,Livpure 7L RO+UV,Livpure,16,10,62.5,5.7,Families,0.625,Winter,Hyderabad
+2026-03-01,APP0111,Water Purifier,Livpure 7L RO+UV,Livpure,16,10,62.5,5.0,Working Professionals,0.625,Summer,Hyderabad
+2026-04-01,APP0112,Water Purifier,Livpure 7L RO+UV,Livpure,16,10,62.5,3.9,Families,0.625,Summer,Hyderabad
+2026-05-01,APP0113,Water Purifier,Livpure 7L RO+UV,Livpure,16,10,62.5,4.6,Working Professionals,0.625,Summer,Hyderabad
+2026-06-01,APP0114,Water Purifier,Livpure 7L RO+UV,Livpure,16,11,68.75,5.4,PG Residents,0.688,Summer,Hyderabad
+2026-07-01,APP0115,Water Purifier,Livpure 7L RO+UV,Livpure,16,11,68.75,5.4,Families,0.688,Monsoon,Hyderabad
+2026-08-01,APP0116,Water Purifier,Livpure 7L RO+UV,Livpure,16,11,68.75,4.7,PG Residents,0.688,Monsoon,Hyderabad
+2026-09-01,APP0117,Water Purifier,Livpure 7L RO+UV,Livpure,16,13,81.25,4.5,Working Professionals,0.812,Monsoon,Hyderabad
+2026-10-01,APP0118,Water Purifier,Livpure 7L RO+UV,Livpure,16,12,75.0,5.2,Students,0.75,Transition,Hyderabad
+2026-11-01,APP0119,Water Purifier,Livpure 7L RO+UV,Livpure,16,13,81.25,4.4,PG Residents,0.812,Winter,Hyderabad
+2026-12-01,APP0120,Water Purifier,Livpure 7L RO+UV,Livpure,16,14,87.5,5.4,Working Professionals,0.875,Winter,Hyderabad
+2026-01-01,APP0121,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,4,22.22,3.5,Families,0.222,Winter,Hyderabad
+2026-02-01,APP0122,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,6,33.33,5.0,Families,0.333,Winter,Hyderabad
+2026-03-01,APP0123,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,9,50.0,3.8,Students,0.5,Summer,Hyderabad
+2026-04-01,APP0124,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,13,72.22,5.9,Families,0.722,Summer,Hyderabad
+2026-05-01,APP0125,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,17,94.44,4.2,Students,0.944,Summer,Hyderabad
+2026-06-01,APP0126,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,17,94.44,5.6,Students,0.944,Summer,Hyderabad
+2026-07-01,APP0127,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,13,72.22,4.1,Students,0.722,Monsoon,Hyderabad
+2026-08-01,APP0128,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,12,66.67,5.2,Students,0.667,Monsoon,Hyderabad
+2026-09-01,APP0129,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,10,55.56,3.4,Families,0.556,Monsoon,Hyderabad
+2026-10-01,APP0130,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,10,55.56,5.6,Students,0.556,Transition,Hyderabad
+2026-11-01,APP0131,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,8,44.44,5.7,Working Professionals,0.444,Winter,Hyderabad
+2026-12-01,APP0132,Air Cooler,Bajaj Desert Air Cooler,Bajaj,18,7,38.89,4.5,Working Professionals,0.389,Winter,Hyderabad
+2026-01-01,APP0133,Air Purifier,Honeywell Air Purifier,Honeywell,14,8,57.14,3.8,Families,0.571,Winter,Hyderabad
+2026-02-01,APP0134,Air Purifier,Honeywell Air Purifier,Honeywell,14,8,57.14,4.6,Working Professionals,0.571,Winter,Hyderabad
+2026-03-01,APP0135,Air Purifier,Honeywell Air Purifier,Honeywell,14,9,64.29,4.2,Working Professionals,0.643,Summer,Hyderabad
+2026-04-01,APP0136,Air Purifier,Honeywell Air Purifier,Honeywell,14,9,64.29,5.3,PG Residents,0.643,Summer,Hyderabad
+2026-05-01,APP0137,Air Purifier,Honeywell Air Purifier,Honeywell,14,9,64.29,3.9,PG Residents,0.643,Summer,Hyderabad
+2026-06-01,APP0138,Air Purifier,Honeywell Air Purifier,Honeywell,14,10,71.43,4.8,Families,0.714,Summer,Hyderabad
+2026-07-01,APP0139,Air Purifier,Honeywell Air Purifier,Honeywell,14,11,78.57,3.9,Working Professionals,0.786,Monsoon,Hyderabad
+2026-08-01,APP0140,Air Purifier,Honeywell Air Purifier,Honeywell,14,10,71.43,5.3,Families,0.714,Monsoon,Hyderabad
+2026-09-01,APP0141,Air Purifier,Honeywell Air Purifier,Honeywell,14,10,71.43,4.0,Working Professionals,0.714,Monsoon,Hyderabad
+2026-10-01,APP0142,Air Purifier,Honeywell Air Purifier,Honeywell,14,11,78.57,3.1,Students,0.786,Transition,Hyderabad
+2026-11-01,APP0143,Air Purifier,Honeywell Air Purifier,Honeywell,14,11,78.57,6.0,Working Professionals,0.786,Winter,Hyderabad
+2026-12-01,APP0144,Air Purifier,Honeywell Air Purifier,Honeywell,14,12,85.71,5.3,Students,0.857,Winter,Hyderabad
+2026-01-01,APP0145,Microwave,LG 28L Convection Microwave,LG,12,6,50.0,6.0,PG Residents,0.5,Winter,Hyderabad
+2026-02-01,APP0146,Microwave,LG 28L Convection Microwave,LG,12,7,58.33,4.3,Families,0.583,Winter,Hyderabad
+2026-03-01,APP0147,Microwave,LG 28L Convection Microwave,LG,12,7,58.33,5.6,PG Residents,0.583,Summer,Hyderabad
+2026-04-01,APP0148,Microwave,LG 28L Convection Microwave,LG,12,8,66.67,4.7,Working Professionals,0.667,Summer,Hyderabad
+2026-05-01,APP0149,Microwave,LG 28L Convection Microwave,LG,12,7,58.33,4.0,Students,0.583,Summer,Hyderabad
+2026-06-01,APP0150,Microwave,LG 28L Convection Microwave,LG,12,8,66.67,4.7,PG Residents,0.667,Summer,Hyderabad
+2026-07-01,APP0151,Microwave,LG 28L Convection Microwave,LG,12,8,66.67,4.5,Families,0.667,Monsoon,Hyderabad
+2026-08-01,APP0152,Microwave,LG 28L Convection Microwave,LG,12,9,75.0,3.2,Students,0.75,Monsoon,Hyderabad
+2026-09-01,APP0153,Microwave,LG 28L Convection Microwave,LG,12,9,75.0,4.9,Working Professionals,0.75,Monsoon,Hyderabad
+2026-10-01,APP0154,Microwave,LG 28L Convection Microwave,LG,12,10,83.33,5.7,Working Professionals,0.833,Transition,Hyderabad
+2026-11-01,APP0155,Microwave,LG 28L Convection Microwave,LG,12,10,83.33,3.9,Working Professionals,0.833,Winter,Hyderabad
+2026-12-01,APP0156,Microwave,LG 28L Convection Microwave,LG,12,10,83.33,5.7,Families,0.833,Winter,Hyderabad
+2026-01-01,APP0157,Induction,Philips Induction Cooktop,Philips,15,9,60.0,5.9,Families,0.6,Winter,Hyderabad
+2026-02-01,APP0158,Induction,Philips Induction Cooktop,Philips,15,8,53.33,4.3,Students,0.533,Winter,Hyderabad
+2026-03-01,APP0159,Induction,Philips Induction Cooktop,Philips,15,9,60.0,5.6,Families,0.6,Summer,Hyderabad
+2026-04-01,APP0160,Induction,Philips Induction Cooktop,Philips,15,9,60.0,4.2,Students,0.6,Summer,Hyderabad
+2026-05-01,APP0161,Induction,Philips Induction Cooktop,Philips,15,10,66.67,3.1,Working Professionals,0.667,Summer,Hyderabad
+2026-06-01,APP0162,Induction,Philips Induction Cooktop,Philips,15,10,66.67,4.4,Working Professionals,0.667,Summer,Hyderabad
+2026-07-01,APP0163,Induction,Philips Induction Cooktop,Philips,15,11,73.33,4.6,Working Professionals,0.733,Monsoon,Hyderabad
+2026-08-01,APP0164,Induction,Philips Induction Cooktop,Philips,15,11,73.33,4.8,PG Residents,0.733,Monsoon,Hyderabad
+2026-09-01,APP0165,Induction,Philips Induction Cooktop,Philips,15,11,73.33,4.5,Working Professionals,0.733,Monsoon,Hyderabad
+2026-10-01,APP0166,Induction,Philips Induction Cooktop,Philips,15,12,80.0,4.8,Working Professionals,0.8,Transition,Hyderabad
+2026-11-01,APP0167,Induction,Philips Induction Cooktop,Philips,15,12,80.0,5.0,Students,0.8,Winter,Hyderabad
+2026-12-01,APP0168,Induction,Philips Induction Cooktop,Philips,15,12,80.0,4.9,Working Professionals,0.8,Winter,Hyderabad
+2026-01-01,APP0169,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,5,50.0,5.3,Families,0.5,Winter,Hyderabad
+2026-02-01,APP0170,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,6,60.0,4.1,Students,0.6,Winter,Hyderabad
+2026-03-01,APP0171,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,6,60.0,3.9,Students,0.6,Summer,Hyderabad
+2026-04-01,APP0172,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,6,60.0,4.3,Working Professionals,0.6,Summer,Hyderabad
+2026-05-01,APP0173,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,7,70.0,4.5,Students,0.7,Summer,Hyderabad
+2026-06-01,APP0174,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,7,70.0,5.5,Students,0.7,Summer,Hyderabad
+2026-07-01,APP0175,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,7,70.0,4.3,Families,0.7,Monsoon,Hyderabad
+2026-08-01,APP0176,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,7,70.0,5.0,Working Professionals,0.7,Monsoon,Hyderabad
+2026-09-01,APP0177,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,7,70.0,2.7,Families,0.7,Monsoon,Hyderabad
+2026-10-01,APP0178,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,8,80.0,2.7,Families,0.8,Transition,Hyderabad
+2026-11-01,APP0179,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,8,80.0,4.7,Working Professionals,0.8,Winter,Hyderabad
+2026-12-01,APP0180,Vacuum Cleaner,Dyson Cordless Vacuum,Dyson,10,8,80.0,4.6,Working Professionals,0.8,Winter,Hyderabad
+2026-01-01,APP0181,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,4,50.0,4.7,Working Professionals,0.5,Winter,Hyderabad
+2026-02-01,APP0182,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,5,62.5,4.5,Working Professionals,0.625,Winter,Hyderabad
+2026-03-01,APP0183,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,5,62.5,3.6,Students,0.625,Summer,Hyderabad
+2026-04-01,APP0184,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,5,62.5,5.2,Families,0.625,Summer,Hyderabad
+2026-05-01,APP0185,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,5,62.5,5.7,Students,0.625,Summer,Hyderabad
+2026-06-01,APP0186,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,6,75.0,5.3,Families,0.75,Summer,Hyderabad
+2026-07-01,APP0187,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,5,62.5,4.3,Working Professionals,0.625,Monsoon,Hyderabad
+2026-08-01,APP0188,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,6,75.0,3.5,Working Professionals,0.75,Monsoon,Hyderabad
+2026-09-01,APP0189,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,6,75.0,5.0,Students,0.75,Monsoon,Hyderabad
+2026-10-01,APP0190,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,6,75.0,4.0,Students,0.75,Transition,Hyderabad
+2026-11-01,APP0191,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,6,75.0,3.8,Students,0.75,Winter,Hyderabad
+2026-12-01,APP0192,Dishwasher,Bosch 13 Place Dishwasher,Bosch,8,6,75.0,5.0,PG Residents,0.75,Winter,Hyderabad
+2026-01-01,APP0193,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,11,78.57,3.8,PG Residents,0.786,Winter,Hyderabad
+2026-02-01,APP0194,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,10,71.43,4.7,Working Professionals,0.714,Winter,Hyderabad
+2026-03-01,APP0195,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,8,57.14,3.7,PG Residents,0.571,Summer,Hyderabad
+2026-04-01,APP0196,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,7,50.0,5.8,Working Professionals,0.5,Summer,Hyderabad
+2026-05-01,APP0197,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,6,42.86,5.0,Working Professionals,0.429,Summer,Hyderabad
+2026-06-01,APP0198,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,7,50.0,2.3,Working Professionals,0.5,Summer,Hyderabad
+2026-07-01,APP0199,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,7,50.0,3.8,Working Professionals,0.5,Monsoon,Hyderabad
+2026-08-01,APP0200,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,8,57.14,4.7,Working Professionals,0.571,Monsoon,Hyderabad
+2026-09-01,APP0201,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,9,64.29,4.5,Working Professionals,0.643,Monsoon,Hyderabad
+2026-10-01,APP0202,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,10,71.43,5.1,Families,0.714,Transition,Hyderabad
+2026-11-01,APP0203,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,13,92.86,5.7,Working Professionals,0.929,Winter,Hyderabad
+2026-12-01,APP0204,Geyser,Bajaj 15L Storage Geyser,Bajaj,14,13,92.86,3.7,PG Residents,0.929,Winter,Hyderabad

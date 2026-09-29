@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api/';
+const getApiBaseUrl = () => {
+  if (typeof window !== 'undefined' && window.location.hostname) {
+    return `http://${window.location.hostname}:8000/api/`;
+  }
+  return 'http://127.0.0.1:8000/api/';
+};
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || getApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -49,9 +56,26 @@ export const authApi = {
   register: (userData) => api.post('auth/register/', userData),
   getProfile: () => api.get('auth/profile/'),
   updateProfile: (data) => api.put('auth/profile/', data),
+  uploadAvatar: (formData) => api.post('auth/upload-avatar/', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
   forgotPassword: (email) => api.post('auth/forgot-password/', { email }),
   resetPassword: (data) => api.post('auth/reset-password/', data),
+  getUsers: (params) => api.get('auth/users/', { params }),
+  getUser: (id) => api.get(`auth/users/${id}/`),
+  createUser: (data) => api.post('auth/admin/create-user/', data),
+  updateUser: (id, data) => api.put(`auth/users/${id}/`, data),
+  getCustomerStats: () => api.get('auth/customer-stats/'),
+  submitKyc: (data) => api.post('auth/kyc/submit/', data),
+  verifyUserKyc: (userId, data) => api.put(`auth/admin/users/${userId}/kyc/`, data),
 };
+
+export const uploadApi = {
+  uploadImage: (formData) => api.post('upload/', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+};
+
 
 export const appliancesApi = {
   getCategories: () => api.get('categories/'),
@@ -70,6 +94,9 @@ export const rentalsApi = {
   createRental: (data) => api.post('rentals/', data),
   updateStatus: (id, data) => api.put(`rentals/${id}/status/`, data),
   requestReturn: (id) => api.post(`rentals/${id}/request-return/`),
+  requestRelocation: (id, data) => api.post(`rentals/${id}/relocate/`, data),
+  settleDeposit: (id, data) => api.post(`rentals/${id}/settle-deposit/`, data),
+  payInvoice: (invoiceId) => api.post(`rentals/invoices/${invoiceId}/pay/`),
 };
 
 export const paymentsApi = {

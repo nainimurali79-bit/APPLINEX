@@ -4,6 +4,7 @@ import StatusBadge from '../../components/common/StatusBadge';
 import Modal from '../../components/common/Modal';
 import SkeletonLoader from '../../components/common/SkeletonLoader';
 import { CreditCard, Download, FileText, CheckCircle2, Printer } from 'lucide-react';
+import { printReceipt } from '../../utils/printReceipt';
 
 const CustomerPayments = () => {
   const [payments, setPayments] = useState([]);
@@ -39,7 +40,9 @@ const CustomerPayments = () => {
   };
 
   const handlePrint = () => {
-    window.print();
+    if (selectedReceipt) {
+      printReceipt(selectedReceipt);
+    }
   };
 
   return (

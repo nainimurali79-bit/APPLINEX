@@ -62,7 +62,8 @@ const SupportTickets = () => {
       fetchTickets();
     } catch (err) {
       setSubmitting(false);
-      addToast('Failed to update ticket.', 'error');
+      const errMsg = err.response?.data?.error || err.response?.data?.detail || 'Failed to update ticket.';
+      addToast(errMsg, 'error');
     }
   };
 

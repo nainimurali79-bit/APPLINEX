@@ -93,13 +93,13 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             
             <div className="form-group">
-              <label className="form-label">Email</label>
+              <label className="form-label">Email or Username</label>
               <div style={{ position: 'relative' }}>
                 <Mail size={17} color="#94A3B8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  placeholder="Enter Email id"
+                  placeholder="Enter Email or Username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   style={{ paddingLeft: '2.4rem' }}

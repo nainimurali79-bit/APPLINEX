@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useNotification } from '../../context/NotificationContext';
+import { useWishlist } from '../../context/WishlistContext';
 import { 
   ShieldCheck, 
   Bell, 
@@ -16,17 +17,50 @@ import {
   Headphones, 
   ChevronDown,
   Search,
-  TrendingUp
+  TrendingUp,
+  Heart,
+  Layers,
+  Bot,
+  ArrowRight
 } from 'lucide-react';
 
 const Navbar = () => {
   const { user, isAuthenticated, role, logout } = useAuth();
   const { notifications, unreadCount, markAllAsRead } = useNotification();
+  const { wishlistCount, setIsWishlistOpen, compareCount, setIsAiConciergeOpen } = useWishlist();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const notifRef = useRef(null);
+  const profileRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setNotifOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
+  // Close dropdowns on route changes
+  useEffect(() => {
+    setNotifOpen(false);
+    setProfileOpen(false);
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -82,57 +116,208 @@ const Navbar = () => {
 
         {/* Desktop Navigation Links */}
         <nav style={{ display: 'none', alignItems: 'center', gap: '1.85rem' }} className="desktop-nav">
-          <Link 
-            to="/" 
-            style={{ 
-              color: isActive('/') ? '#00C4FF' : '#E2E8F0', 
-              fontWeight: isActive('/') ? 600 : 500, 
-              fontSize: '0.92rem',
-              transition: 'color var(--transition-fast)'
-            }}
-          >
-            Home
-          </Link>
-          <Link 
-            to="/appliances" 
-            style={{ 
-              color: isActive('/appliances') ? '#00C4FF' : '#E2E8F0', 
-              fontWeight: isActive('/appliances') ? 600 : 500, 
-              fontSize: '0.92rem',
-              transition: 'color var(--transition-fast)'
-            }}
-          >
-            Appliances Catalog
-          </Link>
-          <Link 
-            to="/dashboard/recommendations" 
-            style={{ 
-              color: '#C084FC', 
-              fontWeight: 600, 
-              fontSize: '0.92rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.35rem',
-              transition: 'color var(--transition-fast)'
-            }}
-          >
-            <Sparkles size={16} /> AI Advisor
-          </Link>
-          <a 
-            href="/#why-applinex" 
-            style={{ 
-              color: '#94A3B8', 
-              fontWeight: 500, 
-              fontSize: '0.92rem',
-              transition: 'color var(--transition-fast)'
-            }}
-          >
-            Why Rent
-          </a>
+          {role === 'admin' ? (
+            <>
+              <Link 
+                to="/admin/dashboard" 
+                style={{ 
+                  color: isActive('/admin/dashboard') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/admin/dashboard') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Dashboard
+              </Link>
+              <Link 
+                to="/admin/appliances" 
+                style={{ 
+                  color: isActive('/admin/appliances') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/admin/appliances') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Appliances
+              </Link>
+              <Link 
+                to="/admin/rentals" 
+                style={{ 
+                  color: isActive('/admin/rentals') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/admin/rentals') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Rentals
+              </Link>
+              <Link 
+                to="/admin/ai-insights" 
+                style={{ 
+                  color: '#C084FC', 
+                  fontWeight: 600, 
+                  fontSize: '0.92rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                <Sparkles size={16} /> AI Forecast
+              </Link>
+              <Link 
+                to="/admin/analytics" 
+                style={{ 
+                  color: isActive('/admin/analytics') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/admin/analytics') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Analytics
+              </Link>
+              <Link 
+                to="/admin/reports" 
+                style={{ 
+                  color: isActive('/admin/reports') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/admin/reports') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Reports
+              </Link>
+            </>
+          ) : role === 'support' ? (
+            <>
+              <Link 
+                to="/support/dashboard" 
+                style={{ 
+                  color: isActive('/support/dashboard') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/support/dashboard') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Support Desk
+              </Link>
+              <Link 
+                to="/support/tickets" 
+                style={{ 
+                  color: isActive('/support/tickets') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/support/tickets') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Tickets
+              </Link>
+              <Link 
+                to="/support/complaints" 
+                style={{ 
+                  color: isActive('/support/complaints') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/support/complaints') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Complaints
+              </Link>
+              <Link 
+                to="/support/moderation" 
+                style={{ 
+                  color: isActive('/support/moderation') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/support/moderation') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Review Moderation
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link 
+                to="/" 
+                style={{ 
+                  color: isActive('/') ? '#00C4FF' : '#FFFFFF', 
+                  fontWeight: isActive('/') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/appliances" 
+                style={{ 
+                  color: isActive('/appliances') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/appliances') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Appliances Catalog
+              </Link>
+              <Link 
+                to="/appliances/compare" 
+                style={{ 
+                  color: isActive('/appliances/compare') ? '#00C4FF' : '#E2E8F0', 
+                  fontWeight: isActive('/appliances/compare') ? 600 : 500, 
+                  fontSize: '0.92rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  transition: 'color var(--transition-fast)',
+                  position: 'relative'
+                }}
+              >
+                <Layers size={16} /> Compare
+                {compareCount > 0 && (
+                  <span style={{
+                    backgroundColor: 'var(--blue-primary)',
+                    color: '#FFFFFF',
+                    fontSize: '0.65rem',
+                    fontWeight: 700,
+                    padding: '1px 5px',
+                    borderRadius: '8px',
+                    lineHeight: 1
+                  }}>
+                    {compareCount}
+                  </span>
+                )}
+              </Link>
+              <Link 
+                to="/dashboard/recommendations" 
+                style={{ 
+                  color: '#C084FC', 
+                  fontWeight: 600, 
+                  fontSize: '0.92rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                <Sparkles size={16} /> AI Advisor
+              </Link>
+              <a 
+                href="/#why-applinex" 
+                style={{ 
+                  color: '#94A3B8', 
+                  fontWeight: 500, 
+                  fontSize: '0.92rem',
+                  transition: 'color var(--transition-fast)'
+                }}
+              >
+                Why Rent
+              </a>
+            </>
+          )}
         </nav>
 
         {/* Action Controls & Authentication Area */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           
           {/* Quick Search Spotlight Button */}
           <button 
@@ -176,8 +361,75 @@ const Navbar = () => {
             </kbd>
           </button>
 
+          {/* AI Assistant Quick Trigger - Customers & Guests Only */}
+          {role !== 'admin' && role !== 'support' && (
+            <button
+              onClick={() => setIsAiConciergeOpen(true)}
+              style={{
+                backgroundColor: 'rgba(124, 58, 237, 0.18)',
+                border: '1px solid rgba(124, 58, 237, 0.4)',
+                width: '38px',
+                height: '38px',
+                borderRadius: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#C084FC',
+                cursor: 'pointer',
+                transition: 'all 150ms ease'
+              }}
+              title="Open AI Concierge"
+            >
+              <Bot size={18} />
+            </button>
+          )}
+
+          {/* Wishlist Button - Customers & Guests Only */}
+          {role !== 'admin' && role !== 'support' && (
+            <button
+              onClick={() => setIsWishlistOpen(true)}
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                width: '38px',
+                height: '38px',
+                borderRadius: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: wishlistCount > 0 ? '#EF4444' : '#FFFFFF',
+                cursor: 'pointer',
+                position: 'relative',
+                transition: 'all 150ms ease'
+              }}
+              title="Saved Wishlist"
+            >
+              <Heart size={18} fill={wishlistCount > 0 ? '#EF4444' : 'none'} />
+              {wishlistCount > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-4px',
+                  right: '-4px',
+                  backgroundColor: '#EF4444',
+                  color: '#FFFFFF',
+                  fontSize: '0.68rem',
+                  fontWeight: '700',
+                  width: '18px',
+                  height: '18px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 0 8px rgba(239, 68, 68, 0.7)'
+                }}>
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+          )}
+
           {/* Notifications Bell */}
-          <div style={{ position: 'relative' }}>
+          <div ref={notifRef} style={{ position: 'relative' }}>
             <button 
               onClick={() => { setNotifOpen(!notifOpen); setProfileOpen(false); }}
               style={{
@@ -281,7 +533,7 @@ const Navbar = () => {
 
           {/* User Auth Buttons / Profile Dropdown */}
           {isAuthenticated ? (
-            <div style={{ position: 'relative' }}>
+            <div ref={profileRef} style={{ position: 'relative' }}>
               <button 
                 onClick={() => { setProfileOpen(!profileOpen); setNotifOpen(false); }}
                 style={{
@@ -298,18 +550,24 @@ const Navbar = () => {
                 }}
               >
                 <div style={{
-                  width: '30px',
-                  height: '30px',
-                  borderRadius: '8px',
-                  background: 'linear-gradient(135deg, #1E60D5 0%, #00C4FF 100%)',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: user?.profile_image ? 'none' : 'linear-gradient(135deg, #1E60D5 0%, #00C4FF 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '0.82rem',
                   fontWeight: 700,
-                  boxShadow: '0 0 10px rgba(0, 196, 255, 0.3)'
+                  boxShadow: '0 0 10px rgba(0, 196, 255, 0.3)',
+                  overflow: 'hidden',
+                  border: user?.profile_image ? '2px solid #00C4FF' : 'none'
                 }}>
-                  {user?.first_name ? user.first_name[0] : (user?.username ? user.username[0].toUpperCase() : 'U')}
+                  {user?.profile_image ? (
+                    <img src={user.profile_image} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    user?.first_name ? user.first_name[0] : (user?.username ? user.username[0].toUpperCase() : 'U')
+                  )}
                 </div>
                 <div style={{ textAlign: 'left', display: 'none' }} className="desktop-user-label">
                   <div style={{ fontSize: '0.85rem', fontWeight: 600, lineHeight: 1.1 }}>{user?.first_name || user?.username}</div>
@@ -326,7 +584,7 @@ const Navbar = () => {
                   position: 'absolute',
                   top: '48px',
                   right: 0,
-                  width: '260px',
+                  width: '270px',
                   backgroundColor: '#FFFFFF',
                   borderRadius: '14px',
                   boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
@@ -335,18 +593,47 @@ const Navbar = () => {
                   overflow: 'hidden',
                   animation: 'fadeIn 200ms ease-out'
                 }}>
-                  <div style={{ padding: '1rem 1.15rem', borderBottom: '1px solid var(--border-light)', backgroundColor: '#F8FAFC' }}>
-                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0F172A' }}>
-                      {user?.first_name} {user?.last_name}
+                  <div style={{ padding: '1rem 1.15rem', borderBottom: '1px solid var(--border-light)', backgroundColor: '#F8FAFC', display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                    <div style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '50%',
+                      backgroundColor: 'var(--blue-primary)',
+                      color: '#FFF',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 700,
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                      border: '2px solid #E2E8F0'
+                    }}>
+                      {user?.profile_image ? (
+                        <img src={user.profile_image} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        user?.first_name ? user.first_name[0] : (user?.username ? user.username[0].toUpperCase() : 'U')
+                      )}
                     </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '2px' }}>
-                      {user?.email}
-                    </div>
-                    <div style={{ marginTop: '6px' }}>
-                      <span className={`badge badge-${role}`}>
-                        <span className="pulse-dot pulse-dot-green" />
-                        {role === 'customer' ? 'Customer Portal' : role === 'admin' ? 'Administrator' : 'Support Specialist'}
-                      </span>
+                    <div style={{ minWidth: 0, flex: 1 }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0F172A', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {user?.first_name ? `${user.first_name} ${user.last_name || ''}` : user?.username}
+                      </div>
+                      <div style={{ fontSize: '0.78rem', color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '1px' }}>
+                        {user?.email}
+                      </div>
+                      <div style={{ marginTop: '4px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '4px' }}>
+                        <span className={`badge badge-${role}`} style={{ fontSize: '0.65rem' }}>
+                          <span className="pulse-dot pulse-dot-green" />
+                          {role === 'customer' ? 'Customer Portal' : role === 'admin' ? 'Administrator' : 'Support Specialist'}
+                        </span>
+                        <Link
+                          to={role === 'admin' ? '/admin/profile' : role === 'support' ? '/support/profile' : '/dashboard/profile'}
+                          onClick={() => setProfileOpen(false)}
+                          style={{ fontSize: '0.72rem', color: '#1E60D5', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '2px' }}
+                        >
+                          View Profile <ArrowRight size={10} />
+                        </Link>
+                      </div>
                     </div>
                   </div>
 
@@ -365,8 +652,8 @@ const Navbar = () => {
                         <Link to="/dashboard/recommendations" onClick={() => setProfileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.6rem 0.75rem', color: '#7C3AED', fontSize: '0.85rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600 }}>
                           <Sparkles size={16} color="#7C3AED" /> AI Smart Recommendations
                         </Link>
-                        <Link to="/dashboard/profile" onClick={() => setProfileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.6rem 0.75rem', color: '#1E293B', fontSize: '0.85rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 500 }}>
-                          <UserIcon size={16} color="#64748B" /> Profile & Addresses
+                        <Link to="/dashboard/profile" onClick={() => setProfileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.6rem 0.75rem', color: '#1E293B', fontSize: '0.85rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, backgroundColor: 'rgba(30, 96, 213, 0.06)' }}>
+                          <UserIcon size={16} color="#1E60D5" /> View Profile & Avatar
                         </Link>
                       </>
                     )}
@@ -385,6 +672,9 @@ const Navbar = () => {
                         <Link to="/admin/ai-insights" onClick={() => setProfileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.6rem 0.75rem', color: '#7C3AED', fontSize: '0.85rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600 }}>
                           <Sparkles size={16} color="#7C3AED" /> AI Demand Forecast
                         </Link>
+                        <Link to="/admin/profile" onClick={() => setProfileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.6rem 0.75rem', color: '#1E293B', fontSize: '0.85rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, backgroundColor: 'rgba(79, 70, 229, 0.08)' }}>
+                          <UserIcon size={16} color="#4F46E5" /> View Admin Profile & Avatar
+                        </Link>
                       </>
                     )}
 
@@ -395,6 +685,9 @@ const Navbar = () => {
                         </Link>
                         <Link to="/support/tickets" onClick={() => setProfileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.6rem 0.75rem', color: '#1E293B', fontSize: '0.85rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 500 }}>
                           <ShieldCheck size={16} color="#0D9488" /> Customer Tickets
+                        </Link>
+                        <Link to="/support/profile" onClick={() => setProfileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.6rem 0.75rem', color: '#1E293B', fontSize: '0.85rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 600, backgroundColor: 'rgba(13, 148, 136, 0.08)' }}>
+                          <UserIcon size={16} color="#0D9488" /> View Staff Profile & Avatar
                         </Link>
                       </>
                     )}
@@ -485,12 +778,78 @@ const Navbar = () => {
           gap: '1rem',
           animation: 'fadeIn 200ms ease-out'
         }}>
-          <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Home</Link>
-          <Link to="/appliances" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Appliances Catalog</Link>
-          <Link to="/dashboard/recommendations" onClick={() => setMobileMenuOpen(false)} style={{ color: '#C084FC', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <Sparkles size={16} /> AI Smart Advisor
-          </Link>
-          <a href="/#why-applinex" onClick={() => setMobileMenuOpen(false)} style={{ color: '#94A3B8', fontWeight: 500 }}>Why ApplineX</a>
+          {role === 'admin' ? (
+            <>
+              <Link to="/admin/dashboard" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 600 }}>Dashboard</Link>
+              <Link to="/admin/appliances" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Appliances Inventory</Link>
+              <Link to="/admin/rentals" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Rentals Orders</Link>
+              <Link to="/admin/ai-insights" onClick={() => setMobileMenuOpen(false)} style={{ color: '#C084FC', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <Sparkles size={16} /> AI Demand Forecast
+              </Link>
+              <Link to="/admin/analytics" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Revenue Analytics</Link>
+              <Link to="/admin/reports" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Fleet Reports</Link>
+              <Link to="/admin/profile" onClick={() => setMobileMenuOpen(false)} style={{ color: '#00C4FF', fontWeight: 600 }}>Admin Profile</Link>
+            </>
+          ) : role === 'support' ? (
+            <>
+              <Link to="/support/dashboard" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 600 }}>Support Desk</Link>
+              <Link to="/support/tickets" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Customer Tickets</Link>
+              <Link to="/support/complaints" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Complaints</Link>
+              <Link to="/support/moderation" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Review Moderation</Link>
+              <Link to="/support/profile" onClick={() => setMobileMenuOpen(false)} style={{ color: '#00C4FF', fontWeight: 600 }}>Staff Profile</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Home</Link>
+              <Link to="/appliances" onClick={() => setMobileMenuOpen(false)} style={{ color: '#FFFFFF', fontWeight: 500 }}>Appliances Catalog</Link>
+              <Link to="/appliances/compare" onClick={() => setMobileMenuOpen(false)} style={{ color: '#00C4FF', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <Layers size={16} /> Compare ({compareCount})
+              </Link>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsWishlistOpen(true);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#EF4444',
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  textAlign: 'left',
+                  padding: 0,
+                  cursor: 'pointer',
+                  fontSize: '1rem'
+                }}
+              >
+                <Heart size={16} fill={wishlistCount > 0 ? '#EF4444' : 'none'} /> Saved Wishlist ({wishlistCount})
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsAiConciergeOpen(true);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#C084FC',
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  textAlign: 'left',
+                  padding: 0,
+                  cursor: 'pointer',
+                  fontSize: '1rem'
+                }}
+              >
+                <Bot size={16} /> AI Concierge Assistant
+              </button>
+              <a href="/#why-applinex" onClick={() => setMobileMenuOpen(false)} style={{ color: '#94A3B8', fontWeight: 500 }}>Why ApplineX</a>
+            </>
+          )}
           
           <div style={{ height: '1px', backgroundColor: 'var(--navy-border)' }} />
           

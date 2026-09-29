@@ -144,19 +144,62 @@ const AdminRentals = () => {
                       </span>
                     </td>
                     <td>
-                      <div style={{ fontWeight: 600, color: 'var(--navy-primary)' }}>
-                        {rental.customer_details?.first_name} {rental.customer_details?.last_name}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: '#64748B' }}>
-                        {rental.customer_details?.email}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        {rental.customer_details?.profile_image ? (
+                          <img
+                            src={rental.customer_details.profile_image}
+                            alt=""
+                            style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover', border: '1px solid #E2E8F0', flexShrink: 0 }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              if (e.currentTarget.nextSibling) e.currentTarget.nextSibling.style.display = 'flex';
+                            }}
+                          />
+                        ) : null}
+                        <div
+                          style={{
+                            display: rental.customer_details?.profile_image ? 'none' : 'flex',
+                            width: '32px',
+                            height: '32px',
+                            borderRadius: '50%',
+                            backgroundColor: 'var(--blue-subtle)',
+                            color: 'var(--blue-primary)',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontWeight: 700,
+                            fontSize: '0.78rem',
+                            flexShrink: 0
+                          }}
+                        >
+                          {(rental.customer_details?.first_name?.[0] || 'C').toUpperCase()}
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 600, color: 'var(--navy-primary)' }}>
+                            {rental.customer_details?.first_name} {rental.customer_details?.last_name}
+                          </div>
+                          <div style={{ fontSize: '0.72rem', color: '#64748B' }}>
+                            {rental.customer_details?.email}
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td>
-                      <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
-                        {rental.appliance_details?.name}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>
-                        {rental.appliance_details?.appliance_code}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        {rental.appliance_details?.image_url ? (
+                          <img
+                            src={rental.appliance_details.image_url}
+                            alt=""
+                            style={{ width: '36px', height: '36px', borderRadius: '6px', objectFit: 'cover', border: '1px solid #E2E8F0', flexShrink: 0 }}
+                          />
+                        ) : null}
+                        <div>
+                          <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                            {rental.appliance_details?.name}
+                          </div>
+                          <div style={{ fontSize: '0.72rem', color: '#94A3B8' }}>
+                            {rental.appliance_details?.appliance_code}
+                          </div>
+                        </div>
                       </div>
                     </td>
                     <td style={{ fontSize: '0.8rem', color: '#475569' }}>

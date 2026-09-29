@@ -99,3 +99,7 @@ class ReviewModerateActionView(views.APIView):
             'message': f'Review {review.status}.',
             'review': ReviewSerializer(review).data
         })
+
+    def patch(self, request, pk):
+        return self.put(request, pk)
+

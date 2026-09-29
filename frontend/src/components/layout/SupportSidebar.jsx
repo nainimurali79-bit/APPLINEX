@@ -6,7 +6,8 @@ import {
   HelpCircle, 
   AlertOctagon, 
   Star, 
-  LogOut 
+  LogOut,
+  User 
 } from 'lucide-react';
 
 const SupportSidebar = () => {
@@ -23,6 +24,7 @@ const SupportSidebar = () => {
     { name: 'Tickets', path: '/support/tickets', icon: HelpCircle },
     { name: 'Complaints', path: '/support/complaints', icon: AlertOctagon },
     { name: 'Review Moderation', path: '/support/reviews', icon: Star },
+    { name: 'Staff Profile', path: '/support/profile', icon: User },
   ];
 
   return (

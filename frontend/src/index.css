@@ -34,3 +34,29 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
+
+/* Single Page Print Optimization */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+  html, body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  .no-print,
+  nav,
+  header,
+  footer,
+  aside,
+  .mobile-menu-btn,
+  #applinex-role-switcher,
+  .btn,
+  button {
+    display: none !important;
+  }
+}
+

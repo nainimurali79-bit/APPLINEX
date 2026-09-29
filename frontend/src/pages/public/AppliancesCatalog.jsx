@@ -4,6 +4,8 @@ import { appliancesApi } from '../../services/api';
 import ApplianceCard from '../../components/appliances/ApplianceCard';
 import FilterPanel from '../../components/appliances/FilterPanel';
 import RentalBookingModal from '../../components/customer/RentalBookingModal';
+import QuickViewModal from '../../components/appliances/QuickViewModal';
+import ApplianceComparisonDrawer from '../../components/appliances/ApplianceComparisonDrawer';
 import SkeletonLoader from '../../components/common/SkeletonLoader';
 import { Search, SlidersHorizontal, ArrowUpDown, Box } from 'lucide-react';
 
@@ -29,6 +31,7 @@ const AppliancesCatalog = () => {
 
   const [selectedAppliance, setSelectedAppliance] = useState(null);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [quickViewAppliance, setQuickViewAppliance] = useState(null);
 
   // Fetch categories & filter meta
   useEffect(() => {
@@ -93,6 +96,10 @@ const AppliancesCatalog = () => {
   const handleRentClick = (appliance) => {
     setSelectedAppliance(appliance);
     setBookingModalOpen(true);
+  };
+
+  const handleQuickView = (appliance) => {
+    setQuickViewAppliance(appliance);
   };
 
   return (
@@ -214,6 +221,7 @@ const AppliancesCatalog = () => {
                     key={appliance.id}
                     appliance={appliance}
                     onRentClick={handleRentClick}
+                    onQuickView={handleQuickView}
                   />
                 ))}
               </div>
@@ -223,6 +231,17 @@ const AppliancesCatalog = () => {
         </div>
 
       </div>
+
+
+      {/* Quick View Modal */}
+      {quickViewAppliance && (
+        <QuickViewModal
+          appliance={quickViewAppliance}
+          isOpen={Boolean(quickViewAppliance)}
+          onClose={() => setQuickViewAppliance(null)}
+          onRentClick={handleRentClick}
+        />
+      )}
 
       {/* Booking Modal */}
       {selectedAppliance && (
